@@ -1,0 +1,9 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    min-width: 100px;
+    min-height: 100px;
+    border: 1px solid darkgray;
+    background-color: lightgray;
+    position: absolute;
+}
