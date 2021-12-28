@@ -1,8 +1,8 @@
 import React, { useContext, createContext, useState, useRef, useEffect } from "react";
 import { objectHasChanged, createObjectProxy } from "./Object";
-import InitState from "./State/Init";
-import NotifyState from "./State/Notify";
-import StorageState from "./State/Storage";
+import { createInit } from "./State/Init";
+import { createNotify } from "./State/Notify";
+import { createStorage } from "./State/Storage";
 
 export function createState(props) {
     const hasProps = typeof props === "object";
@@ -58,8 +58,8 @@ export function createState(props) {
         }, [callbacks]);
         return proxy;
     };
-    State.Init = InitState;
-    State.Notify = NotifyState;
-    State.Storage = StorageState;
+    State.Init = createInit(Context);
+    State.Notify = createNotify(Context);
+    State.Storage = createStorage(Context);
     return State;
 }

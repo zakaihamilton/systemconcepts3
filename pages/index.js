@@ -11,27 +11,33 @@ export default function Home() {
       </Head>
 
       <main>
-        <Window>
-          <Window.Title>
-            <Window.Title.Label>
-              Title
-            </Window.Title.Label>
-          </Window.Title>
-        </Window>
-        <Window>
-          <Window.Title>
-            <Window.Title.Label>
-              Title 2
-            </Window.Title.Label>
-          </Window.Title>
-        </Window>
-        <Window>
-          <Window.Title>
-            <Window.Title.Label>
-              Title 3
-            </Window.Title.Label>
-          </Window.Title>
-        </Window>
+        <Window.State>
+          <Window>
+            <Window.Title>
+              <Window.Title.Label>
+                Title
+              </Window.Title.Label>
+            </Window.Title>
+          </Window>
+        </Window.State>
+        <Window.State>
+          <Window>
+            <Window.Title>
+              <Window.Title.Label>
+                Title 2
+              </Window.Title.Label>
+            </Window.Title>
+          </Window>
+        </Window.State>
+        <Window.State>
+          <Window>
+            <Window.Title>
+              <Window.Title.Label>
+                Title 3
+              </Window.Title.Label>
+            </Window.Title>
+          </Window>
+        </Window.State>
       </main>
     </>
   )
