@@ -25,6 +25,13 @@ export default function Home() {
             </Window.Title.Label>
           </Window.Title>
         </Window>
+        <Window>
+          <Window.Title>
+            <Window.Title.Label>
+              Title 3
+            </Window.Title.Label>
+          </Window.Title>
+        </Window>
       </main>
     </>
   )

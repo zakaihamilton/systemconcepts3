@@ -21,7 +21,9 @@ export function createStack() {
         }, [state, el]);
         useEffect(() => {
             state.setFocus = el => {
-                state.items = [...state.items.filter(item => item !== el), el];
+                if (state.items[state.items.length - 1] !== el) {
+                    state.items = [...state.items.filter(item => item !== el), el];
+                }
             }
         }, [state]);
         return state;
