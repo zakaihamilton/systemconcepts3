@@ -13,8 +13,8 @@ export default function Window({ children }) {
     const el = ref?.current;
     const window = Window.State.useState();
     const stack = Window.Stack.useInStack(el);
-    const active = stack.items && stack.items[stack.items.length - 1] === el;
-    const zIndex = stack.items && stack.items.findIndex(el => el === el) * 100;
+    const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
+    const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
     const classes = useClass(styles.root, active && styles.active, window?.fullscreen && styles.fullscreen);
     const onMouseDown = useCallback(() => {
         stack.setFocus(el);
@@ -31,8 +31,7 @@ export default function Window({ children }) {
         }
     }
     useEffect(() => {
-        if (el) {
-            console.log("set");
+        if (el && window) {
             el.state = window;
             window.el = el;
         }

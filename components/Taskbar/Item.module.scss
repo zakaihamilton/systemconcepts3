@@ -1,9 +1,9 @@
 .root {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     border: 1px solid darkgray;
     background-color: lightgray;
-    margin: 0.3em;
+    margin: 0.1em;
 }
 
 .root.active {

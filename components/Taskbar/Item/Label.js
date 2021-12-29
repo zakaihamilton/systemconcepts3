@@ -10,6 +10,8 @@ export default function Label({ children }) {
         stack.setFocus(state?.window?.el);
     }, [stack, state?.window?.el]);
     return <div onClick={onClick} className={styles.root}>
-        {children}
+        <div className={styles.label}>
+            {children}
+        </div>
     </div>
 }
