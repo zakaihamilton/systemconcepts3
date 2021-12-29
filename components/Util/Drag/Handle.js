@@ -19,13 +19,16 @@ export default function Handle({ handle, enabled = true, children = null }) {
         target.style.top = targetTop + 'px';
     }, [dragState]);
     useEventListener(enabled && handle, "mousedown", e => {
+        if (!dragState) {
+            return;
+        }
         dragState.dragging = true;
         const handleRegion = e.target.getBoundingClientRect();
         dragState.offset = [e.clientX - handleRegion.left + 1, e.clientY - handleRegion.top + 1];
         moveTarget(e);
     }, [dragState, moveTarget]);
-    useEventListener(dragState.dragging && globalDocument, "mousemove", moveTarget, [dragState, moveTarget]);
-    useEventListener(dragState.dragging && globalDocument, "mouseup", e => {
+    useEventListener(dragState?.dragging && globalDocument, "mousemove", moveTarget, [dragState, moveTarget]);
+    useEventListener(dragState?.dragging && globalDocument, "mouseup", e => {
         Object.assign(dragState, { dragging: false, x: pos.current[0], y: pos.current[1] });
         moveTarget(e);
     }, [dragState, moveTarget]);

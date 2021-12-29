@@ -11,7 +11,9 @@ export default function Label({ children }) {
     const window = Window.State.useState();
     const classes = useClass(styles.root, window?.active && styles.active);
     useEffect(() => {
-        window.label = String(children);
+        if (window) {
+            window.label = String(children);
+        }
     }, [window, children]);
     const toggleFullscreen = useCallback(() => {
         window.fullscreen = !window.fullscreen;

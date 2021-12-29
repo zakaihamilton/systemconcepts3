@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { createState } from "./State";
 
 export function createStack() {
-    const State = createState({ items: [] });
+    const State = createState();
     State.useInStack = (el) => {
         const state = State.useState();
         useEffect(() => {
@@ -21,6 +21,9 @@ export function createStack() {
         }, [state, el]);
         useEffect(() => {
             state.setFocus = el => {
+                if (!el) {
+                    return;
+                }
                 if (state.items[state.items.length - 1] !== el) {
                     state.items = [...state.items.filter(item => item !== el), el];
                 }

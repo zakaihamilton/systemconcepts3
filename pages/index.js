@@ -29,8 +29,8 @@ export default function Home() {
             <Window.Title />
           </Window>
         </Window.State>
+        <TaskBar />
       </Window.Stack>
-      <TaskBar />
     </>
   )
 }
