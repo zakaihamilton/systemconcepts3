@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Window from "components/Window"
+import Desktop from "components/Desktop"
+import TaskBar from "components/Taskbar"
 
 export default function Home() {
   return (
@@ -10,35 +12,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <Window.State>
-          <Window>
-            <Window.Title>
-              <Window.Title.Label>
-                Title
-              </Window.Title.Label>
-            </Window.Title>
+      <Window.Stack>
+        <Desktop />
+        <Window.State label="Title">
+          <Window >
+            <Window.Title />
           </Window>
         </Window.State>
-        <Window.State>
+        <Window.State label="Title 2">
           <Window>
-            <Window.Title>
-              <Window.Title.Label>
-                Title 2
-              </Window.Title.Label>
-            </Window.Title>
+            <Window.Title />
           </Window>
         </Window.State>
-        <Window.State>
+        <Window.State label="Title 3">
           <Window>
-            <Window.Title>
-              <Window.Title.Label>
-                Title 3
-              </Window.Title.Label>
-            </Window.Title>
+            <Window.Title />
           </Window>
         </Window.State>
-      </main>
+      </Window.Stack>
+      <TaskBar />
     </>
   )
 }

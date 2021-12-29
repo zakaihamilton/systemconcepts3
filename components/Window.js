@@ -12,8 +12,8 @@ export default function Window({ children }) {
     const ref = useStateRef();
     const window = Window.State.useState();
     const stack = Window.Stack.useInStack(ref?.current);
-    const active = stack.items[stack.items.length - 1] === ref?.current;
-    const zIndex = stack.items.findIndex(el => el === ref?.current) * 100;
+    const active = stack.items && stack.items[stack.items.length - 1] === ref?.current;
+    const zIndex = stack.items && stack.items.findIndex(el => el === ref?.current) * 100;
     const classes = useClass(styles.root, active && styles.active, window?.fullscreen && styles.fullscreen);
     const onMouseDown = useCallback(() => {
         stack.setFocus(ref?.current);

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 
 export function useEventListener(target, type, listener, depends = [], options = {}) {
     useEffect(() => {
-        console.log("target", target);
         if (!target) {
             return;
         }
