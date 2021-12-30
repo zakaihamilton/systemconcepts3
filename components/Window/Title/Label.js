@@ -4,7 +4,7 @@ import styles from "./Label.module.scss";
 import { useStateRef } from "components/Util/Ref";
 import Window from "components/Window";
 import { useClass } from "components/Util/Styles";
-import { useCallback, useEffect } from "react/cjs/react.development";
+import { useCallback, useEffect } from "react";
 
 export default function Label({ children }) {
     const ref = useStateRef();

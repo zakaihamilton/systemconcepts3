@@ -1,4 +1,4 @@
-import { useCallback } from "react/cjs/react.development";
+import { useCallback } from "react";
 import styles from "./Label.module.scss";
 import Window from "components/Window";
 import TaskbarItem from "../Item";

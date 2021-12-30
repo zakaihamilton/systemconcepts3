@@ -66,7 +66,7 @@ export function createState(props) {
 
 export function useStateFromObject(object) {
     const [, setCounter] = useState(0);
-    const callbacks = object.__callbacks;
+    const callbacks = object?.__callbacks;
     useEffect(() => {
         const handler = () => {
             setCounter(counter => counter + 1);
@@ -74,6 +74,7 @@ export function useStateFromObject(object) {
         if (callbacks) {
             callbacks.push(handler);
         }
+        handler();
         return () => {
             if (callbacks) {
                 callbacks.remove(handler);

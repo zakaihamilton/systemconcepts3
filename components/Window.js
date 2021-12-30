@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect } from "react";
 import Drag from "./Util/Drag";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
