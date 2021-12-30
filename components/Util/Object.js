@@ -34,6 +34,11 @@ export function createObjectProxy(props) {
             return forward("defineProperty", target, prop, descriptor);
         }
     });
+    Object.defineProperty(proxy, '__callbacks', {
+        value: callbacks,
+        writable: true,
+        enumerable: false
+    });
     callbacks.remove = cb => {
         const index = callbacks.indexOf(cb);
         if (index !== -1) {
