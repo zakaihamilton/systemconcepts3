@@ -3,7 +3,7 @@ import { createState } from "./State";
 
 export function createStack() {
     const State = createState();
-    State.useInStack = (el) => {
+    State.useInStack = (el, focusable) => {
         const state = State.useState();
         useEffect(() => {
             if (!el || !state) {
@@ -11,17 +11,28 @@ export function createStack() {
             }
             if (!state.items) {
                 state.items = [el];
-                state.focus = [el];
             }
             else {
                 state.items = [...state.items, el];
-                state.focus = [...state.focus, el];
             }
             return () => {
                 state.items = state.items.filter(item => item !== el);
-                state.focus = state.focus.filter(item => item !== el);
             };
         }, [state, el]);
+        useEffect(() => {
+            if (!el || !state) {
+                return;
+            }
+            if (!state.focus) {
+                state.focus = [el];
+            }
+            else {
+                state.focus = [...state.focus, focusable && el].filter(Boolean);
+            }
+            return () => {
+                state.focus = state.focus.filter(item => item !== el);
+            };
+        }, [state, el, focusable]);
         useEffect(() => {
             if (!state) {
                 return;

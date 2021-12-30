@@ -12,10 +12,14 @@ export default function Window({ children }) {
     const ref = useStateRef();
     const el = ref?.current;
     const window = Window.State.useState();
-    const stack = Window.Stack.useInStack(el);
+    const stack = Window.Stack.useInStack(el, !window?.minimized);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
-    const classes = useClass(styles.root, active && styles.active, window?.fullscreen && styles.fullscreen);
+    const classes = useClass(
+        styles.root,
+        active && styles.active,
+        window?.fullscreen && styles.fullscreen,
+        window?.minimized && styles.minimized);
     const onMouseDown = useCallback(() => {
         stack.setFocus(el);
     }, [stack, el]);
