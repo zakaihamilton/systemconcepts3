@@ -1,11 +1,13 @@
 .root {
     display: flex;
     background-color: lightgray;
+    color: darkgray;
     border-bottom: 1px solid darkgray;
     min-height: 1.5em;
 }
 
 .root.active {
     background-color: darkgray;
+    color: black;
     border-bottom: 1px solid black;
 }

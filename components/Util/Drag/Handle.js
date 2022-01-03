@@ -29,7 +29,7 @@ export default function Handle({ handle, enabled = true, children = null }) {
     }, [dragState, moveTarget]);
     useEventListener(dragState?.dragging && globalDocument, "mousemove", moveTarget, [dragState, moveTarget]);
     useEventListener(dragState?.dragging && globalDocument, "mouseup", e => {
-        Object.assign(dragState, { dragging: false, x: pos.current[0], y: pos.current[1] });
+        Object.assign(dragState, { x: pos.current[0], y: pos.current[1], dragging: false });
         moveTarget(e);
     }, [dragState, moveTarget]);
     return children;

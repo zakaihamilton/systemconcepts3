@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Drag from "../Drag";
 
 export default function Target({ target, children = null }) {

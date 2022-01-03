@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import styles from "./Window.module.scss";
 import Drag from "./Util/Drag";
+import Resize from "./Util/Resize";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
 import { createState } from "./Util/State";
@@ -34,10 +35,14 @@ export default function Window({ header = undefined, footer = undefined, childre
         if (window?.fullscreen) {
             style.left = "";
             style.top = "";
+            style.width = "";
+            style.height = "";
         }
         else {
             style.left = window.movableLeft + "px";
             style.top = window.movableTop + "px";
+            style.width = window.resizableWidth + "px";
+            style.height = window.resizableHeight + "px";
         }
     }
     useEffect(() => {
@@ -57,16 +62,26 @@ export default function Window({ header = undefined, footer = undefined, childre
             window.movableTop = drag.y;
         }
     }, [window]);
+    const onResizing = useCallback((resizing, resize) => {
+        if (window && !resizing) {
+            window.resizableWidth = resize.width;
+            window.resizableHeight = resize.height;
+        }
+    }, [window]);
     return <Drag>
-        <Drag.Target target={el} />
-        <Drag.State.Notify dragging={onDragging} />
-        <div ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
-            {header}
-            <div className={styles.content}>
-                {children}
+        <Resize>
+            <Resize.Target target={el} />
+            <Drag.Target target={el} />
+            <Drag.State.Notify dragging={onDragging} />
+            <Resize.State.Notify resizing={onResizing} />
+            <div ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
+                {header}
+                <div className={styles.content}>
+                    {children}
+                </div>
+                {footer}
             </div>
-            {footer}
-        </div>
+        </Resize>
     </Drag>;
 }
 

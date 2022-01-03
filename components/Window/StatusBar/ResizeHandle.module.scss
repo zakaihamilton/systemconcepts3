@@ -1,0 +1,11 @@
+.root {
+    border: 1px solid green;
+    background-color: green;
+    min-width: 1.5em;
+    min-height: 1.5em;
+    display: none;
+}
+
+.root.enabled {
+    display: flex;
+}
