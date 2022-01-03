@@ -3,6 +3,7 @@ import Resize from "components/Util/Resize";
 import { useStateRef } from "components/Util/Ref";
 import Window from "components/Window";
 import { useClass } from "components/Util/Styles";
+import { MdDragHandle } from 'react-icons/md';
 
 export default function ResizeHandle({ }) {
     const ref = useStateRef();
@@ -10,7 +11,7 @@ export default function ResizeHandle({ }) {
     const enabled = !window?.fullscreen && window.active;
     return <Resize.Handle enabled={enabled} handle={ref?.current}>
         <div ref={ref} className={useClass(styles.root, enabled && styles.enabled)}>
-
+            <MdDragHandle />
         </div>
     </Resize.Handle>;
 }

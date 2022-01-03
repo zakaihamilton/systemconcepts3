@@ -1,9 +1,10 @@
 .root {
-    border: 1px solid green;
-    background-color: green;
     min-width: 1.5em;
     min-height: 1.5em;
     display: none;
+    align-items: flex-end;
+    justify-content: flex-end;
+    transform: translate(10px, 3px) rotate(125deg);
 }
 
 .root.enabled {

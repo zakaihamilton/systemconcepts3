@@ -28,7 +28,7 @@ export default function Window({ header = undefined, footer = undefined, childre
         window?.fullscreen && styles.fullscreen,
         window?.minimized && styles.minimized);
     const onMouseDown = useCallback(() => {
-        stack.setFocus(el);
+        stack?.setFocus(el);
     }, [stack, el]);
     const style = { zIndex };
     if (window) {

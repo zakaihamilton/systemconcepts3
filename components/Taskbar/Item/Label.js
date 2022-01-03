@@ -12,7 +12,7 @@ export default function Label({ children }) {
         }
         else {
             state.window.minimized = false;
-            stack.setFocus(state?.window?.el);
+            stack?.setFocus(state?.window?.el);
         }
     }, [stack, state?.window]);
     return <div onClick={onClick} className={styles.root}>
