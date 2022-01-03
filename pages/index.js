@@ -15,18 +15,15 @@ export default function Home() {
       <Window.Stack>
         <Desktop>
           <Window.State label="Title">
-            <Window >
-              <Window.Title />
+            <Window>
             </Window>
           </Window.State>
           <Window.State label="Title 2">
             <Window>
-              <Window.Title />
             </Window>
           </Window.State>
           <Window.State label="Title 3">
             <Window>
-              <Window.Title />
             </Window>
           </Window.State>
         </Desktop>

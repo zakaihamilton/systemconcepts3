@@ -1,20 +1,26 @@
-import React, { useCallback } from "react";
-import { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
+import styles from "./Window.module.scss";
 import Drag from "./Util/Drag";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
 import { createState } from "./Util/State";
 import { useClass } from "./Util/Styles";
-import styles from "./Window.module.scss";
+import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
 
-export default function Window({ children }) {
+export default function Window({ header = undefined, footer = undefined, children }) {
     const ref = useStateRef();
     const el = ref?.current;
     const window = Window.State.useState();
     const stack = Window.Stack.useInStack(el, !window?.minimized);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
+    if (typeof header === "undefined") {
+        header = <Window.Title />;
+    }
+    if (typeof footer === "undefined") {
+        footer = <Window.StatusBar />;
+    }
     const classes = useClass(
         styles.root,
         active && styles.active,
@@ -55,11 +61,16 @@ export default function Window({ children }) {
         <Drag.Target target={el} />
         <Drag.State.Notify dragging={onDragging} />
         <div ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
-            {children}
+            {header}
+            <div className={styles.content}>
+                {children}
+            </div>
+            {footer}
         </div>
     </Drag>;
 }
 
 Window.State = createState();
-Window.Title = Title;
 Window.Stack = createStack();
+Window.Title = Title;
+Window.StatusBar = StatusBar;
