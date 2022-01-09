@@ -18,7 +18,7 @@ export default function Home() {
             <Window>
             </Window>
           </Window.State>
-          <Window.State label="Title 2">
+          <Window.State label="Title 2" center>
             <Window>
             </Window>
           </Window.State>

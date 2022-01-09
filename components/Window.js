@@ -8,6 +8,7 @@ import { createState } from "./Util/State";
 import { useClass } from "./Util/Styles";
 import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
+import { useSize } from "./Util/Size";
 
 export default function Window({ header = undefined, footer = undefined, children }) {
     const ref = useStateRef();
@@ -16,6 +17,7 @@ export default function Window({ header = undefined, footer = undefined, childre
     const stack = Window.Stack.useInStack(el, !window?.minimized);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
+    const [generalWidth, generalHeight] = useSize();
     if (typeof header === "undefined") {
         header = <Window.Title />;
     }
@@ -56,16 +58,26 @@ export default function Window({ header = undefined, footer = undefined, childre
             window.active = active;
         }
     }, [window, active]);
+    useEffect(() => {
+        if (window.center) {
+            window.movableLeft = generalWidth / 4;
+            window.movableTop = generalHeight / 4;
+            window.resizableWidth = generalWidth / 2;
+            window.resizableHeight = generalHeight / 2;
+        }
+    }, [generalHeight, generalWidth, window, window.center]);
     const onDragging = useCallback((dragging, drag) => {
         if (window && !dragging) {
             window.movableLeft = drag.x;
             window.movableTop = drag.y;
+            window.center = false;
         }
     }, [window]);
     const onResizing = useCallback((resizing, resize) => {
         if (window && !resizing) {
             window.resizableWidth = resize.width;
             window.resizableHeight = resize.height;
+            window.center = false;
         }
     }, [window]);
     return <Drag>
