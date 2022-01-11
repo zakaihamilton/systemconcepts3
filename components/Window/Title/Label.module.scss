@@ -6,13 +6,17 @@
     -webkit-user-drag: none;
     padding-left: 0.5em;
     padding-right: 0.5em;
-    border-right: 1px solid darkgray;
+    outline: 1px solid darkgray;
+    border-bottom: 1px solid transparent;
+    border-right: 1px solid transparent;
 }
 
 .root.active {
-    border-right: 1px solid black;
+    outline: 1px solid black;
 }
 
 .root:active {
     background-color: lightgray;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
 }

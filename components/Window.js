@@ -83,7 +83,9 @@ export default function Window({ header = undefined, footer = undefined, childre
         }
     }, [window]);
     const dragHandler = useCallback((left, top) => {
-        window.fullscreen = top < 0;
+        if (window) {
+            window.fullscreen = top < 0;
+        }
         if (top < 0) {
             top = 0;
             left = 0;
