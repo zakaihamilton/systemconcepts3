@@ -2,7 +2,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
     user-select: none;
     -webkit-user-drag: none;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-right: 1px solid darkgray;
+}
+
+.root.active {
+    border-right: 1px solid black;
+}
+
+.root:active {
+    background-color: lightgray;
 }

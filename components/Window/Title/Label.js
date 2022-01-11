@@ -4,7 +4,7 @@ import styles from "./Label.module.scss";
 import { useStateRef } from "components/Util/Ref";
 import Window from "components/Window";
 import { useClass } from "components/Util/Styles";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function Label({ children }) {
     const ref = useStateRef();
@@ -15,11 +15,8 @@ export default function Label({ children }) {
             window.label = String(children);
         }
     }, [window, children]);
-    const toggleFullscreen = useCallback(() => {
-        window.fullscreen = !window.fullscreen;
-    }, [window]);
-    return <Drag.Handle enabled={!window?.fullscreen} handle={ref?.current}>
-        <div ref={ref} onDoubleClick={toggleFullscreen} className={classes}>
+    return <Drag.Handle handle={ref?.current}>
+        <div ref={ref} className={classes}>
             {children}
         </div>
     </Drag.Handle>;

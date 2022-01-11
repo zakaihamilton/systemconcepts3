@@ -3,8 +3,8 @@ import Handle from "./Drag/Handle";
 import Target from "./Drag/Target";
 import { createState } from "./State";
 
-export default function Drag({ children }) {
-    return <Drag.State>
+export default function Drag({ children, ...state }) {
+    return <Drag.State {...state}>
         {children}
     </Drag.State>;
 }

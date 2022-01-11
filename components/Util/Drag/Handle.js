@@ -15,6 +15,9 @@ export default function Handle({ handle, enabled = true, children = null }) {
         const targetLeft = e.clientX - left;
         const targetTop = e.clientY - top;
         pos.current = [targetLeft, targetTop];
+        if (typeof dragState.handler === "function") {
+            [targetLeft, targetTop] = dragState.handler(targetLeft, targetTop);
+        }
         target.style.left = targetLeft + 'px';
         target.style.top = targetTop + 'px';
     }, [dragState]);
