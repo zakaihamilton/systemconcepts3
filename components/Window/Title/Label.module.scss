@@ -19,4 +19,9 @@
     background-color: lightgray;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
+    color: black;
+}
+
+.root.active.fullscreen {
+    outline: 1px solid white;
 }

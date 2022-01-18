@@ -11,3 +11,9 @@
     color: black;
     border-bottom: 1px solid black;
 }
+
+.root.active.fullscreen {
+    background: radial-gradient(circle farthest-corner at 10% 20%, rgba(0, 52, 89, 1) 0%, rgba(0, 118, 182, 1) 90%);
+    color: white;
+    border-bottom: 1px solid white;
+}

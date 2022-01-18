@@ -9,7 +9,7 @@ import { useEffect } from "react";
 export default function Label({ children }) {
     const ref = useStateRef();
     const window = Window.State.useState();
-    const classes = useClass(styles.root, window?.active && styles.active);
+    const classes = useClass(styles.root, window?.active && styles.active, window?.fullscreen && styles.fullscreen);
     useEffect(() => {
         if (window) {
             window.label = String(children);
