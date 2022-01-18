@@ -12,7 +12,7 @@
 }
 
 .root.active {
-    outline: 1px solid black;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .root:active {
@@ -23,5 +23,5 @@
 }
 
 .root.active.fullscreen {
-    outline: 1px solid white;
+    outline: 1px solid rgba(255, 255, 255, 0.12);
 }
