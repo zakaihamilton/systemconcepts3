@@ -8,7 +8,6 @@ import { createState } from "./Util/State";
 import { useClass } from "./Util/Styles";
 import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
-import { useSize } from "./Util/Size";
 import Desktop from "./Desktop";
 import Element from "./Util/Element";
 
@@ -99,7 +98,7 @@ export default function Window({ header = undefined, footer = undefined, childre
             <Drag.Target target={el} />
             <Drag.State.Notify dragging={onDragging} />
             <Resize.State.Notify resizing={onResizing} />
-            <Element ref={ref} style={style} className={classes} accentColor={window?.accentColor} onMouseDown={onMouseDown}>
+            <Element ref={ref} style={style} className={classes} accentColor={window?.accentColor || "darkgray"} onMouseDown={onMouseDown}>
                 {header}
                 <div className={styles.content}>
                     {children}

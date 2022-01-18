@@ -14,15 +14,15 @@ export default function Home() {
 
       <Window.Stack>
         <Desktop>
-          <Window.State label="Title" accentColor="red">
+          <Window.State label="Title">
             <Window>
             </Window>
           </Window.State>
-          <Window.State label="Title 2" center accentColor="blue">
+          <Window.State label="Title 2" center>
             <Window>
             </Window>
           </Window.State>
-          <Window.State label="Title 3" accentColor="green">
+          <Window.State label="Title 3">
             <Window>
             </Window>
           </Window.State>
