@@ -12,6 +12,12 @@ export default function Taskbar({ children = null }) {
             </TaskbarItem.State>
         });
     }, [stack?.items]);
+    if (stack?.items?.length === 1) {
+        const window = stack.items[0].state;
+        if (window.fullscreen && !window.minimized) {
+            return null;
+        }
+    }
     return <div className={styles.root}>
         {children}
         {items}

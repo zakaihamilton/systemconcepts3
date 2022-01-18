@@ -84,14 +84,18 @@ export default function Window({ header = undefined, footer = undefined, childre
     }, [window]);
     const dragHandler = useCallback((left, top) => {
         if (window) {
-            window.fullscreen = top < 0;
+            const fullscreen = top < 0;
+            if (!window.fullscreen !== !fullscreen) {
+                window.fullscreen = top < 0;
+                stack.items = [...stack.items];
+            }
         }
         if (top < 0) {
             top = 0;
             left = 0;
         }
         return [left, top];
-    }, [window]);
+    }, [window, stack]);
     return <Drag handler={dragHandler}>
         <Resize>
             <Resize.Target target={el} />
