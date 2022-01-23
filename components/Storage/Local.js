@@ -1,7 +1,7 @@
 import { useEventListener } from "components/Util/EventListener";
 import { createState } from "components/Util/State";
 import { useState, useMemo } from "react";
-import { useCallback } from "react/cjs/react.development";
+import { useCallback } from "react";
 
 function checkIfStorageIsAvailable(type) {
     var storage;
