@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Window from "components/Window"
 import Desktop from "components/Desktop"
 import TaskBar from "components/Taskbar"
+import AppLocalStorage from "components/App/Util/LocalStorage"
+import Storage from "components/Storage"
 
 export default function Home() {
   return (
@@ -14,18 +16,17 @@ export default function Home() {
 
       <Window.Stack>
         <Desktop>
-          <Window.State label="Title">
-            <Window>
-            </Window>
-          </Window.State>
-          <Window.State label="Title 2" center>
-            <Window>
-            </Window>
-          </Window.State>
-          <Window.State label="Title 3">
-            <Window>
-            </Window>
-          </Window.State>
+          <Storage>
+            <Window.State label="Title">
+              <Window>
+              </Window>
+            </Window.State>
+            <Window.State label="Title 2" center>
+              <Window>
+              </Window>
+            </Window.State>
+            <AppLocalStorage />
+          </Storage>
         </Desktop>
         <TaskBar />
       </Window.Stack>
