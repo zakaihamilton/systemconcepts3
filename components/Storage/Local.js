@@ -5,6 +5,9 @@ import { useCallback } from "react";
 
 function checkIfStorageIsAvailable(type) {
     var storage;
+    if (typeof window === "undefined") {
+        return false;
+    }
     try {
         storage = window[type];
         var x = '__storage_test__';
