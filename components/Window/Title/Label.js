@@ -9,13 +9,16 @@ import { useEffect } from "react";
 export default function Label({ children }) {
     const ref = useStateRef();
     const window = Window.State.useState();
-    const classes = useClass(styles.root, window?.active && styles.active, window?.fullscreen && styles.fullscreen);
+    const classes = useClass(styles.root,
+        window?.active && styles.active,
+        window?.fullscreen && styles.fullscreen,
+        window?.modal && styles.modal);
     useEffect(() => {
         if (window) {
             window.label = String(children);
         }
     }, [window, children]);
-    return <Drag.Handle handle={ref?.current}>
+    return <Drag.Handle handle={ref?.current} enabled={!window?.modal}>
         <div ref={ref} className={classes}>
             {children}
         </div>

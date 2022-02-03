@@ -15,9 +15,14 @@
     outline: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.root:active {
+.root:not(.modal):active {
     background-color: lightgray;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
     color: black;
+}
+
+.root.modal {
+    border-right: none;
+    outline: none;
 }
