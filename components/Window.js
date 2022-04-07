@@ -12,11 +12,10 @@ import Desktop from "./Desktop";
 import Element from "./Util/Element";
 import { createComponent } from "components/Util/Component";
 
-const Window = createComponent({ ref: true, name: "Window" }, ({ header = undefined, footer = undefined, children }) => {
+const Window = createComponent({ name: "Window" }, ({ state, header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
     const el = ref?.current;
-    const window = Window.State.useState();
-    const stack = Window.Stack.useInStack(el, !window?.minimized, window?.alwaysontop);
+    const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
     const region = Desktop.Region.useRegion();
@@ -29,60 +28,60 @@ const Window = createComponent({ ref: true, name: "Window" }, ({ header = undefi
     const classes = useClass(
         styles.root,
         active && styles.active,
-        window?.fullscreen && styles.fullscreen,
-        window?.minimized && styles.minimized);
+        state?.fullscreen && styles.fullscreen,
+        state?.minimized && styles.minimized);
     const onMouseDown = useCallback(() => {
         stack?.setFocus(el);
     }, [stack, el]);
     const style = useMemo(() => {
         let left, top, width, height;
-        if (window && window?.fullscreen) {
-            left = window.movableLeft + "px";
-            top = window.movableTop + "px";
-            width = window.resizableWidth + "px";
-            height = window.resizableHeight + "px";
+        if (state && state?.fullscreen) {
+            left = state.movableLeft + "px";
+            top = state.movableTop + "px";
+            width = state.resizableWidth + "px";
+            height = state.resizableHeight + "px";
         }
         return { zIndex, left, top, width, height };
-    }, [window, zIndex]);
+    }, [state, zIndex]);
     useEffect(() => {
-        if (el && window) {
-            el.state = window;
-            window.el = el;
+        if (el && state) {
+            el.state = state;
+            state.el = el;
         }
-    }, [el, window]);
+    }, [el, state]);
     useEffect(() => {
-        if (window) {
-            window.active = active;
+        if (state) {
+            state.active = active;
         }
-    }, [window, active]);
+    }, [state, active]);
     useEffect(() => {
-        if (window?.center && region) {
+        if (state?.center && region) {
             const margin = 60;
-            window.movableLeft = margin;
-            window.movableTop = margin;
-            window.resizableWidth = region.width - (margin * 2);
-            window.resizableHeight = region.height - (margin * 2);
+            state.movableLeft = margin;
+            state.movableTop = margin;
+            state.resizableWidth = region.width - (margin * 2);
+            state.resizableHeight = region.height - (margin * 2);
         }
-    }, [region, window, window?.center]);
+    }, [region, state, state?.center]);
     const onDragging = useCallback((dragging, drag) => {
-        if (window && !dragging) {
-            window.movableLeft = drag.x;
-            window.movableTop = drag.y;
-            window.center = false;
+        if (state && !dragging) {
+            state.movableLeft = drag.x;
+            state.movableTop = drag.y;
+            state.center = false;
         }
-    }, [window]);
+    }, [state]);
     const onResizing = useCallback((resizing, resize) => {
-        if (window && !resizing) {
-            window.resizableWidth = resize.width;
-            window.resizableHeight = resize.height;
-            window.center = false;
+        if (state && !resizing) {
+            state.resizableWidth = resize.width;
+            state.resizableHeight = resize.height;
+            state.center = false;
         }
-    }, [window]);
+    }, [state]);
     const dragHandler = useCallback((left, top) => {
-        if (window) {
+        if (state) {
             const fullscreen = top < 0;
-            if (!window.fullscreen !== !fullscreen) {
-                window.fullscreen = top < 0;
+            if (!state.fullscreen !== !fullscreen) {
+                state.fullscreen = top < 0;
                 stack.items = [...stack.items];
             }
         }
@@ -91,7 +90,7 @@ const Window = createComponent({ ref: true, name: "Window" }, ({ header = undefi
             left = 0;
         }
         return [left, top];
-    }, [window, stack]);
+    }, [state, stack]);
     return <Drag handler={dragHandler}>
         <Resize>
             <Resize.Target target={el} />
@@ -113,5 +112,9 @@ Window.State = createState();
 Window.Stack = createStack();
 Window.Title = Title;
 Window.StatusBar = StatusBar;
+Window.extendComponent(() => {
+    const state = Window.State.useState();
+    return { state };
+})
 
 export default Window;
