@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import styles from "./Window.module.scss";
 import Drag from "./Util/Drag";
 import Resize from "./Util/Resize";
@@ -15,7 +15,7 @@ export default function Window({ header = undefined, footer = undefined, childre
     const ref = useStateRef();
     const el = ref?.current;
     const window = Window.State.useState();
-    const stack = Window.Stack.useInStack(el, !window?.minimized);
+    const stack = Window.Stack.useInStack(el, !window?.minimized, window?.alwaysontop);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
     const region = Desktop.Region.useRegion();
@@ -33,21 +33,16 @@ export default function Window({ header = undefined, footer = undefined, childre
     const onMouseDown = useCallback(() => {
         stack?.setFocus(el);
     }, [stack, el]);
-    const style = { zIndex };
-    if (window) {
-        if (window?.fullscreen) {
-            style.left = "";
-            style.top = "";
-            style.width = "";
-            style.height = "";
+    const style = useMemo(() => {
+        let left, top, width, height;
+        if (window && window?.fullscreen) {
+            left = window.movableLeft + "px";
+            top = window.movableTop + "px";
+            width = window.resizableWidth + "px";
+            height = window.resizableHeight + "px";
         }
-        else {
-            style.left = window.movableLeft + "px";
-            style.top = window.movableTop + "px";
-            style.width = window.resizableWidth + "px";
-            style.height = window.resizableHeight + "px";
-        }
-    }
+        return { zIndex, left, top, width, height };
+    }, [window, zIndex]);
     useEffect(() => {
         if (el && window) {
             el.state = window;
@@ -102,7 +97,7 @@ export default function Window({ header = undefined, footer = undefined, childre
             <Drag.Target target={el} />
             <Drag.State.Notify dragging={onDragging} />
             <Resize.State.Notify resizing={onResizing} />
-            <Element ref={ref} style={style} className={classes} accentColor={window?.accentColor || "darkgray"} onMouseDown={onMouseDown}>
+            <Element ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
                 {header}
                 <div className={styles.content}>
                     {children}

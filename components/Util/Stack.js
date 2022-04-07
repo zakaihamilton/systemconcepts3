@@ -3,7 +3,7 @@ import { createState } from "./State";
 
 export function createStack() {
     const State = createState();
-    State.useInStack = (el, focusable) => {
+    State.useInStack = (el, focusable, alwaysontop) => {
         const state = State.useState();
         useEffect(() => {
             if (!el || !state) {

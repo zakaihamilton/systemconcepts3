@@ -21,7 +21,7 @@ export default function Home() {
               <Window>
               </Window>
             </Window.State>
-            <Window.State label="Title 2" center modal>
+            <Window.State label="Title 2" center modal alwaysontop>
               <Window>
               </Window>
             </Window.State>
