@@ -12,13 +12,12 @@ import Desktop from "./Desktop";
 import Element from "./Util/Element";
 import { createComponent } from "components/Util/Component";
 
-const Window = createComponent({ name: "Window" }, ({ state, header = undefined, footer = undefined, children }) => {
+const Window = createComponent({ name: "Window" }, ({ state, region, header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
     const el = ref?.current;
     const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
-    const region = Desktop.Region.useRegion();
     if (typeof header === "undefined") {
         header = <Window.Title />;
     }
@@ -112,9 +111,9 @@ Window.State = createState();
 Window.Stack = createStack();
 Window.Title = Title;
 Window.StatusBar = StatusBar;
-Window.extendComponent(() => {
-    const state = Window.State.useState();
-    return { state };
-})
+Window.extendComponent(() => ({
+    state: Window.State.useState(),
+    region: Desktop.Region.useRegion()
+}));
 
 export default Window;
