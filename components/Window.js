@@ -10,8 +10,9 @@ import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
 import Desktop from "./Desktop";
 import Element from "./Util/Element";
+import { createComponent } from "components/Util/Component";
 
-export default function Window({ header = undefined, footer = undefined, children }) {
+const Window = createComponent({ ref: true, name: "Window" }, ({ header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
     const el = ref?.current;
     const window = Window.State.useState();
@@ -106,9 +107,11 @@ export default function Window({ header = undefined, footer = undefined, childre
             </Element>
         </Resize>
     </Drag>;
-}
+});
 
 Window.State = createState();
 Window.Stack = createStack();
 Window.Title = Title;
 Window.StatusBar = StatusBar;
+
+export default Window;
