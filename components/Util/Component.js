@@ -1,18 +1,28 @@
 import React from "react";
 
+function compose(props, components, children) {
+    components = components.filter(([, Component]) => typeof Component === "function");
+    if (!components.length) {
+        return children;
+    }
+    return components.reduce((acc, [key, Component]) => {
+        return <Component key={key} {...props}>{acc}</Component>;
+    }, children);
+};
+
 export function createComponent(options, Component) {
     options = options || {};
     const name = options.name || Component.name || Component.displayName;
     let Wrapper = props => {
         props = { ...props };
-        const { extensions = [] } = Component || {};
-        for (const extension of extensions) {
+        const { propExtensions = [], componentExtensions = {} } = Component || {};
+        for (const extension of propExtensions) {
             const result = extension(props);
             if (result) {
                 Object.assign(props, result);
             }
         }
-        return <Component {...props} />;
+        return compose(props, Object.entries(componentExtensions), <Component {...props} />);
     };
     if (options.ref) {
         const Source = Wrapper;
@@ -23,9 +33,16 @@ export function createComponent(options, Component) {
         Wrapper.displayName = name;
     }
     Wrapper.displayName = name;
-    Wrapper.extendComponent = Extension => {
-        const extensions = Component.extensions || [];
-        Component.extensions = [...extensions, Extension];
+    Wrapper.extendProps = Extension => {
+        const extensions = Component.propExtensions || [];
+        Component.propExtensions = [...extensions, Extension];
+    };
+    Wrapper.extendComponent = (key, Extension) => {
+        let extensions = Component.componentExtensions;
+        if (!extensions) {
+            extensions = Component.componentExtensions = {};
+        }
+        extensions[key] = Extension;
     };
     return Wrapper;
 }

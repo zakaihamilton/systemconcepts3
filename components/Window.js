@@ -111,7 +111,7 @@ Window.State = createState();
 Window.Stack = createStack();
 Window.Title = Title;
 Window.StatusBar = StatusBar;
-Window.extendComponent(() => ({
+Window.extendProps(() => ({
     state: Window.State.useState(),
     region: Desktop.Region.useRegion()
 }));
