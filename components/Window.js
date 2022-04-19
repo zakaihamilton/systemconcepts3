@@ -31,8 +31,10 @@ const Window = createComponent({ name: "Window" }, ({ state, region, header = un
         state?.fullscreen && styles.fullscreen,
         state?.minimized && styles.minimized);
     const onMouseDown = useCallback(() => {
-        stack?.setFocus(el);
-    }, [stack, el]);
+        if (!active) {
+            stack?.setFocus(el);
+        }
+    }, [stack, el, active]);
     const style = useMemo(() => {
         let left = "0", top = "0", width = "initial", height = "initial";
         if (!state?.fullscreen) {
