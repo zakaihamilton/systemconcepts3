@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import styles from "./Window.module.scss";
-import Drag from "./Util/Drag";
 import Resize from "./Util/Resize";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
@@ -11,6 +10,8 @@ import Title from "./Window/Title";
 import Desktop from "./Desktop";
 import Element from "./Util/Element";
 import { createComponent } from "components/Util/Component";
+import WindowDrag from "./Window/Drag";
+import WindowResize from "./Window/Resize";
 
 const Window = createComponent({ name: "Window" }, ({ state, region, header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
@@ -62,40 +63,8 @@ const Window = createComponent({ name: "Window" }, ({ state, region, header = un
             state.resizableHeight = region.height - (margin * 2);
         }
     }, [region, state, state?.center]);
-    const onDragging = useCallback((dragging, drag) => {
-        if (state && !dragging) {
-            state.movableLeft = drag.x;
-            state.movableTop = drag.y;
-            state.center = false;
-        }
-    }, [state]);
-    const onResizing = useCallback((resizing, resize) => {
-        if (state && !resizing) {
-            state.resizableWidth = resize.width;
-            state.resizableHeight = resize.height;
-            state.center = false;
-        }
-    }, [state]);
-    const dragHandler = useCallback((left, top) => {
-        if (state) {
-            const fullscreen = top < 0;
-            if (!state.fullscreen !== !fullscreen) {
-                state.fullscreen = top < 0;
-                stack.items = [...stack.items];
-            }
-        }
-        if (top < 0) {
-            top = 0;
-            left = 0;
-        }
-        return [left, top];
-    }, [state, stack]);
-    return <Drag handler={dragHandler}>
-        <Resize>
-            <Resize.Target target={el} />
-            <Drag.Target target={el} />
-            <Drag.State.Notify dragging={onDragging} />
-            <Resize.State.Notify resizing={onResizing} />
+    return <WindowDrag state={state} stack={stack} el={el}>
+        <WindowResize state={state} el={el}>
             <Element ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
                 {header}
                 <div className={styles.content}>
@@ -103,8 +72,8 @@ const Window = createComponent({ name: "Window" }, ({ state, region, header = un
                 </div>
                 {footer}
             </Element>
-        </Resize>
-    </Drag>;
+        </WindowResize>
+    </WindowDrag>;
 });
 
 Window.State = createState();
