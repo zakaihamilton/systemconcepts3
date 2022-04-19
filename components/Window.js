@@ -33,15 +33,15 @@ const Window = createComponent({ name: "Window" }, ({ state, region, header = un
         stack?.setFocus(el);
     }, [stack, el]);
     const style = useMemo(() => {
-        let left, top, width, height;
-        if (state && state?.fullscreen) {
+        let left = "0", top = "0", width = "initial", height = "initial";
+        if (!state?.fullscreen) {
             left = state.movableLeft + "px";
             top = state.movableTop + "px";
             width = state.resizableWidth + "px";
             height = state.resizableHeight + "px";
         }
         return { zIndex, left, top, width, height };
-    }, [state, zIndex]);
+    }, [state?.fullscreen, state.movableLeft, state.movableTop, state.resizableWidth, state.resizableHeight, zIndex]);
     useEffect(() => {
         if (el && state) {
             el.state = state;
