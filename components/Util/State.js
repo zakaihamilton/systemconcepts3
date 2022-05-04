@@ -34,17 +34,33 @@ export function createState(props) {
             {children}
         </Context.Provider>;
     }
-    State.useState = (defaultState) => {
+    State.useState = (selector) => {
         const [, setCounter] = useState(0);
         const ref = useRef();
         const context = useContext(Context);
-        if (!context && defaultState && !ref.current) {
-            const [proxy, callbacks] = createObjectProxy(defaultState);
-            ref.current = { proxy, callbacks };
-        }
         const { proxy, callbacks } = context || ref.current || {};
         useEffect(() => {
-            const handler = () => {
+            const handler = (_, key) => {
+                if (selector) {
+                    if (typeof selector === "object") {
+                        if (Array.isArray(selector)) {
+                            if (!selector.includes(key)) {
+                                return;
+                            }
+                        }
+                        else {
+                            if (!selector[key]) {
+                                return;
+                            }
+                        }
+                    }
+                    else if (typeof selector === "function") {
+                        const keys = Object.keys(proxy);
+                        if (!selector(proxy)) {
+                            return;
+                        }
+                    }
+                }
                 setCounter(counter => counter + 1);
             };
             if (callbacks) {
@@ -55,7 +71,7 @@ export function createState(props) {
                     callbacks.remove(handler);
                 }
             };
-        }, [callbacks]);
+        }, [callbacks, proxy, selector]);
         return proxy;
     };
     State.Init = createInit(Context);

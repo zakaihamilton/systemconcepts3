@@ -10,9 +10,7 @@ function compose(props, components, children) {
     }, children);
 };
 
-export function createComponent(options, Component) {
-    options = options || {};
-    const name = options.name || Component.name || Component.displayName;
+export function createComponent(Component, name, options = {}) {
     let Wrapper = props => {
         props = { ...props };
         const { propExtensions = [], componentExtensions = {} } = Component || {};

@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import styles from "./Window.module.scss";
-import Resize from "./Util/Resize";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
 import { createState } from "./Util/State";
@@ -13,7 +12,7 @@ import { createComponent } from "components/Util/Component";
 import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
 
-const Window = createComponent({ name: "Window" }, ({ state, region, header = undefined, footer = undefined, children }) => {
+const Window = createComponent(({ state, region, header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
     const el = ref?.current;
     const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
@@ -76,7 +75,7 @@ const Window = createComponent({ name: "Window" }, ({ state, region, header = un
             </Element>
         </WindowResize>
     </WindowDrag>;
-});
+}, "Window");
 
 Window.State = createState();
 Window.Stack = createStack();
