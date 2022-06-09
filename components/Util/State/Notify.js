@@ -2,23 +2,22 @@ import { useContext, useEffect } from "react";
 
 export function createNotify(Context) {
     function NotifyState({ ...props }) {
-        const context = useContext(Context);
+        const object = useContext(Context);
         const keys = Object.keys(props);
         const values = Object.values(props);
         useEffect(() => {
-            const callbacks = context?.callbacks;
             const update = (method, target, key) => {
                 if (props[key]) {
-                    const value = context?.proxy[key];
-                    props[key](value, context?.proxy);
+                    const value = object[key];
+                    props[key](value, object);
                 }
             };
-            if (callbacks) {
-                callbacks.push(update);
+            if (object) {
+                object.__register(update);
             }
             return () => {
-                if (callbacks) {
-                    callbacks.remove(update);
+                if (object) {
+                    object.__register(update);
                 }
             };
             // eslint-disable-next-line react-hooks/exhaustive-deps

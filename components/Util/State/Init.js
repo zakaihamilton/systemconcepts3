@@ -2,16 +2,18 @@ import { useContext, useEffect } from "react";
 
 export function createInit(Context) {
     function InitState({ ...props }) {
-        const context = useContext(Context);
+        const object = useContext(Context);
         const keys = Object.keys(props);
         const values = Object.values(props);
         useEffect(() => {
-            const { proxy } = context || ref.current || {};
+            if (!object) {
+                return;
+            }
             keys.forEach(key => {
-                props[key](proxy[key]);
+                props[key](object[key]);
             });
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [...keys, ...values]);
+        }, [object, ...keys, ...values]);
         return null;
     }
     return InitState;

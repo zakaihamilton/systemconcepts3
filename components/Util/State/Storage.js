@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 
 export function createStorage(Context) {
     function StorageState({ id, load, save, children }) {
-        const context = useContext(Context);
+        const object = useContext(Context);
         useEffect(() => {
             if (!load) {
                 return null;
@@ -12,25 +12,24 @@ export function createStorage(Context) {
             if (result?.then) {
                 result.then(data => {
                     if (typeof data === "object") {
-                        Object.assign(context?.proxy, data);
+                        Object.assign(object, data);
                     }
                 });
             } else if (result) {
-                Object.assign(context?.proxy, result);
+                Object.assign(object, result);
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [load, id]);
         useEffect(() => {
             const saveValues = () => {
-                save(id, context?.proxy);
+                save(id, object);
             };
-            const callbacks = context?.callbacks;
-            if (save && callbacks) {
-                callbacks.push(saveValues);
+            if (save && object) {
+                object.__register(saveValues);
             }
             return () => {
-                if (callbacks) {
-                    callbacks.remove(saveValues);
+                if (object) {
+                    object.__unregister(saveValues);
                 }
             };
             // eslint-disable-next-line react-hooks/exhaustive-deps            
