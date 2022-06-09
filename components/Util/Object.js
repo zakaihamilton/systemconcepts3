@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 export function objectHasChanged(a, b) {
     a = a || {};
     b = b || {};
@@ -34,31 +32,20 @@ export function createObjectProxy(props) {
             return forward("defineProperty", target, prop, descriptor);
         }
     });
-    Object.defineProperty(proxy, '__callbacks', {
-        value: callbacks,
-        writable: true,
+    Object.defineProperty(proxy, "__register", {
+        value: cb => callbacks.push(cb),
+        writable: false,
         enumerable: false
     });
-    callbacks.remove = cb => {
-        const index = callbacks.indexOf(cb);
-        if (index !== -1) {
-            callbacks.splice(index, 1);
-        }
-    };
-    return [proxy, callbacks];
-}
-
-export function useObject(object) {
-    const ref = useRef({ ...object });
-    useEffect(() => {
-        const hasChanged = objectHasChanged(ref.current, object);
-        if (hasChanged) {
-            ref.current = { ...object };
-        }
+    Object.defineProperty(proxy, "__unregister", {
+        value: () => cb => {
+            const index = callbacks.indexOf(cb);
+            if (index !== -1) {
+                callbacks.splice(index, 1);
+            }
+        },
+        writable: false,
+        enumerable: false
     });
-    return ref.current;
-}
-
-export function cleanObject(object) {
-    return Object.fromEntries(Object.entries(object).filter(([_, val]) => typeof val !== "undefined"));
+    return proxy;
 }

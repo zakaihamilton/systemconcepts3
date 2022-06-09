@@ -6,18 +6,17 @@ import { createStorage } from "./State/Storage";
 
 export function createState(props) {
     const hasProps = typeof props === "object";
-    const [proxy, callbacks] = hasProps && createObjectProxy(props) || [];
-    const Context = createContext(hasProps && { proxy, callbacks });
+    const object = hasProps && createObjectProxy(props) || [];
+    const Context = createContext(hasProps && object);
 
     function State({ children, ...props }) {
         const [updatedProps, setUpdatedProps] = useState({ ...props });
-        const stateRef = useRef({ proxy: null, callbacks: [] });
-        const valueChanged = stateRef.current.proxy && objectHasChanged(props, updatedProps);
+        const stateRef = useRef(null);
+        const valueChanged = stateRef.current && objectHasChanged(props, updatedProps);
         const changeRef = useRef(0);
-        if (!stateRef.current.proxy) {
-            const [proxy, callbacks] = createObjectProxy(props);
-            stateRef.current.proxy = proxy;
-            stateRef.current.callbacks = callbacks;
+        if (!stateRef.current) {
+            const object = createObjectProxy(props);
+            stateRef.current = object;
         }
         if (valueChanged) {
             changeRef.current++;
@@ -27,7 +26,7 @@ export function createState(props) {
                 return;
             }
             setUpdatedProps({ ...props });
-            Object.assign(stateRef.current.proxy, { ...props });
+            Object.assign(stateRef.current, props);
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [changeRef.current]);
         return <Context.Provider value={stateRef.current}>
@@ -36,10 +35,12 @@ export function createState(props) {
     }
     State.useState = (selector) => {
         const [, setCounter] = useState(0);
-        const ref = useRef();
         const context = useContext(Context);
-        const { proxy, callbacks } = context || ref.current || {};
+        const object = context || null;
         useEffect(() => {
+            if (!object) {
+                return;
+            }
             const handler = (_, key) => {
                 if (selector) {
                     if (typeof selector === "object") {
@@ -55,24 +56,19 @@ export function createState(props) {
                         }
                     }
                     else if (typeof selector === "function") {
-                        const keys = Object.keys(proxy);
-                        if (!selector(proxy)) {
+                        if (!selector(key)) {
                             return;
                         }
                     }
                 }
                 setCounter(counter => counter + 1);
             };
-            if (callbacks) {
-                callbacks.push(handler);
-            }
+            object.__register(handler);
             return () => {
-                if (callbacks) {
-                    callbacks.remove(handler);
-                }
+                object.__unregister(handler);
             };
-        }, [callbacks, proxy, selector]);
-        return proxy;
+        }, [object, selector]);
+        return object;
     };
     State.Init = createInit(Context);
     State.Notify = createNotify(Context);
@@ -82,20 +78,19 @@ export function createState(props) {
 
 export function useStateFromObject(object) {
     const [, setCounter] = useState(0);
-    const callbacks = object?.__callbacks;
     useEffect(() => {
         const handler = () => {
             setCounter(counter => counter + 1);
         };
-        if (callbacks) {
-            callbacks.push(handler);
+        if (object) {
+            object.__register(handler);
         }
         handler();
         return () => {
-            if (callbacks) {
-                callbacks.remove(handler);
+            if (object) {
+                object.__unregister(handler);
             }
         };
-    }, [callbacks]);
+    }, [object]);
     return object;
 };
