@@ -15,28 +15,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Window.Stack>
-        <Desktop>
-          <Storage>
-            <Node>
-              <Window.State label="Title">
-                <Window>
-                </Window>
-              </Window.State>
-            </Node>
-            <Node>
-              <Window.State label="Title 2" center modal alwaysontop>
-                <Window>
-                </Window>
-              </Window.State>
-            </Node>
-            <Node>
-              <AppLocalStorage />
-            </Node>
-          </Storage>
-        </Desktop>
-        <TaskBar />
-      </Window.Stack>
+      <Window.Stack />
+      <Desktop>
+        <Storage>
+          <Node>
+            <Window.State label="Title" />
+            <Window />
+          </Node>
+          <Node>
+            <Window.State label="Title 2" center modal alwaysontop />
+            <Window />
+          </Node>
+          <Node>
+            <AppLocalStorage />
+          </Node>
+        </Storage>
+      </Desktop>
+      <TaskBar />
     </>
-  )
+  );
 }

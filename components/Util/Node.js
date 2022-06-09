@@ -44,6 +44,5 @@ Node.useNode = (id) => {
             node = node.parent;
         }
     }
-    console.log("node", node, "id", id);
     return node;
 };

@@ -4,11 +4,10 @@ import { createRegion } from "./Util/Region";
 
 export default function Desktop({ children }) {
     const ref = useStateRef();
-    return <Desktop.Region target={ref?.current}>
-        <div ref={ref} className={styles.root}>
-            {children}
-        </div>
-    </Desktop.Region>;
+    return <div ref={ref} className={styles.root}>
+        <Desktop.Region target={ref?.current} />
+        {children}
+    </div>;
 }
 
 Desktop.Region = createRegion();

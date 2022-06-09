@@ -68,9 +68,10 @@ export default function LocalStorage({ children }) {
         }
         return new Array(localStorage.length).map((_, index) => localStorage.key(index));
     }, [storageAvailable]);
-    return <LocalStorage.State counter={counter} getItem={getItem} setItem={setItem} clear={clear} keys={keys} storageAvailable={storageAvailable}>
+    return <>
+        <LocalStorage.State counter={counter} getItem={getItem} setItem={setItem} clear={clear} keys={keys} storageAvailable={storageAvailable}></LocalStorage.State>
         {children}
-    </LocalStorage.State>;
+    </>;
 }
 
 LocalStorage.State = createState("LocalStorage.State");

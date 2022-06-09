@@ -9,9 +9,8 @@ export default function Taskbar({ children = null }) {
     const items = useMemo(() => {
         return stack?.items?.map((el, idx) => {
             return <Node key={idx}>
-                <TaskbarItem.State window={el.state}>
-                    <TaskbarItem />
-                </TaskbarItem.State>
+                <TaskbarItem.State window={el.state} />
+                <TaskbarItem />
             </Node>
         });
     }, [stack?.items]);

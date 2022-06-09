@@ -23,9 +23,10 @@ export default function WindowDrag({ children, el, state, stack }) {
         }
         return [left, top];
     }, [state, stack]);
-    return <Drag handler={dragHandler}>
+    return <>
+        <Drag handler={dragHandler} />
         <Drag.Target target={el} />
         <Drag.State.Notify dragging={onDragging} />
         {children}
-    </Drag>;
+    </>;
 }
