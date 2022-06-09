@@ -9,6 +9,6 @@ export default function Drag({ children, ...state }) {
     </Drag.State>;
 }
 
-Drag.State = createState();
+Drag.State = createState("Drag.State");
 Drag.Handle = Handle;
 Drag.Target = Target;

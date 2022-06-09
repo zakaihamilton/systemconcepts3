@@ -73,4 +73,4 @@ export default function LocalStorage({ children }) {
     </LocalStorage.State>;
 }
 
-LocalStorage.State = createState();
+LocalStorage.State = createState("LocalStorage.State");

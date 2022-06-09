@@ -9,6 +9,6 @@ export default function Resize({ children }) {
     </Resize.State>;
 }
 
-Resize.State = createState();
+Resize.State = createState("Resize.State");
 Resize.Handle = Handle;
 Resize.Target = Target;

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { createState } from "./State";
 
-export function createStack() {
-    const State = createState();
-    State.useInStack = (el, focusable, alwaysontop) => {
+export function createStack(displayName, nodeId) {
+    const State = createState(displayName, nodeId);
+    State.useInStack = (el, focusable) => {
         const state = State.useState();
         useEffect(() => {
             if (!el || !state) {

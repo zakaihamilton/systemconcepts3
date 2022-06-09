@@ -14,4 +14,4 @@ export default function TaskbarItem({ }) {
 }
 
 TaskbarItem.Label = Label;
-TaskbarItem.State = createState();
+TaskbarItem.State = createState("TaskbarItem.State");

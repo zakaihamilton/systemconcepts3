@@ -1,8 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import Node from "../Node";
 
-export function createNotify(Context) {
+export function createNotify(State, nodeId) {
     function NotifyState({ ...props }) {
-        const object = useContext(Context);
+        const node = Node.useNode(nodeId);
+        const object = node.get(State);
         const keys = Object.keys(props);
         const values = Object.values(props);
         useEffect(() => {

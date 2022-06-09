@@ -1,9 +1,11 @@
 import { useContext, useEffect } from "react";
+import Node from "../Node";
 
 
-export function createStorage(Context) {
+export function createStorage(State, nodeId) {
     function StorageState({ id, load, save, children }) {
-        const object = useContext(Context);
+        const node = Node.useNode(nodeId);
+        const object = node.get(State);
         useEffect(() => {
             if (!load) {
                 return null;
@@ -34,7 +36,7 @@ export function createStorage(Context) {
             };
             // eslint-disable-next-line react-hooks/exhaustive-deps            
         }, [save, id]);
-        return children || null;
+        return children;
     };
     return StorageState;
 }

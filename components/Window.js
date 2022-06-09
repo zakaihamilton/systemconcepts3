@@ -77,8 +77,8 @@ const Window = createComponent(({ state, region, header = undefined, footer = un
     </WindowDrag>;
 }, "Window");
 
-Window.State = createState();
-Window.Stack = createStack();
+Window.State = createState("Window.State");
+Window.Stack = createStack("Window.Stack", "root");
 Window.Title = Title;
 Window.StatusBar = StatusBar;
 Window.extendProps(() => ({

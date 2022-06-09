@@ -1,22 +1,20 @@
-import React, { useContext, createContext, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import Node from "./Node";
 import { objectHasChanged, createObjectProxy } from "./Object";
 import { createInit } from "./State/Init";
 import { createNotify } from "./State/Notify";
 import { createStorage } from "./State/Storage";
 
-export function createState(props) {
-    const hasProps = typeof props === "object";
-    const object = hasProps && createObjectProxy(props) || [];
-    const Context = createContext(hasProps && object);
-
+export function createState(displayName, nodeId) {
     function State({ children, ...props }) {
+        const node = Node.useNode(nodeId);
+        let object = node.get(State);
         const [updatedProps, setUpdatedProps] = useState({ ...props });
-        const stateRef = useRef(null);
-        const valueChanged = stateRef.current && objectHasChanged(props, updatedProps);
+        const valueChanged = object && objectHasChanged(props, updatedProps);
         const changeRef = useRef(0);
-        if (!stateRef.current) {
-            const object = createObjectProxy(props);
-            stateRef.current = object;
+        if (!object) {
+            object = createObjectProxy(props);
+            node.set(State, object);
         }
         if (valueChanged) {
             changeRef.current++;
@@ -26,17 +24,15 @@ export function createState(props) {
                 return;
             }
             setUpdatedProps({ ...props });
-            Object.assign(stateRef.current, props);
+            Object.assign(object, props);
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [changeRef.current]);
-        return <Context.Provider value={stateRef.current}>
-            {children}
-        </Context.Provider>;
+        return children;
     }
     State.useState = (selector) => {
         const [, setCounter] = useState(0);
-        const context = useContext(Context);
-        const object = context || null;
+        const node = Node.useNode(nodeId);
+        const object = node.get(State);
         useEffect(() => {
             if (!object) {
                 return;
@@ -70,9 +66,10 @@ export function createState(props) {
         }, [object, selector]);
         return object;
     };
-    State.Init = createInit(Context);
-    State.Notify = createNotify(Context);
-    State.Storage = createStorage(Context);
+    State.Init = createInit(State, nodeId);
+    State.Notify = createNotify(State, nodeId);
+    State.Storage = createStorage(State, nodeId);
+    State.displayName = displayName;
     return State;
 }
 

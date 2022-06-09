@@ -27,7 +27,7 @@ export function createRegion() {
             {children}
         </Region.State>;
     }
-    Region.State = createState();
+    Region.State = createState("Region.State");
     Region.useRegion = () => {
         const state = Region.State.useState();
         return state?.region;

@@ -1,8 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import Node from "../Node";
 
-export function createInit(Context) {
+export function createInit(State, nodeId) {
     function InitState({ ...props }) {
-        const object = useContext(Context);
+        const node = Node.useNode(nodeId);
+        const object = node.get(State);
         const keys = Object.keys(props);
         const values = Object.values(props);
         useEffect(() => {

@@ -4,6 +4,7 @@ import Desktop from "components/Desktop"
 import TaskBar from "components/Taskbar"
 import AppLocalStorage from "components/App/Util/LocalStorage"
 import Storage from "components/Storage"
+import Node from "components/Util/Node"
 
 export default function Home() {
   return (
@@ -17,15 +18,21 @@ export default function Home() {
       <Window.Stack>
         <Desktop>
           <Storage>
-            <Window.State label="Title">
-              <Window>
-              </Window>
-            </Window.State>
-            <Window.State label="Title 2" center modal alwaysontop>
-              <Window>
-              </Window>
-            </Window.State>
-            <AppLocalStorage />
+            <Node>
+              <Window.State label="Title">
+                <Window>
+                </Window>
+              </Window.State>
+            </Node>
+            <Node>
+              <Window.State label="Title 2" center modal alwaysontop>
+                <Window>
+                </Window>
+              </Window.State>
+            </Node>
+            <Node>
+              <AppLocalStorage />
+            </Node>
           </Storage>
         </Desktop>
         <TaskBar />
