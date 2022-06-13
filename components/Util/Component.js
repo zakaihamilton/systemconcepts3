@@ -13,14 +13,7 @@ function compose(props, components, children) {
 export function createComponent(Component, name, options = {}) {
     let Wrapper = props => {
         props = { ...props };
-        const { propExtensions = [], componentExtensions = {} } = Component || {};
-        for (const extension of propExtensions) {
-            const result = extension(props);
-            if (result) {
-                Object.assign(props, result);
-            }
-        }
-        return compose(props, Object.entries(componentExtensions), <Component {...props} />);
+        return compose(props, Object.entries(Component?.extensions || {}), <Component {...props} />);
     };
     if (options.ref) {
         const Source = Wrapper;
@@ -31,14 +24,10 @@ export function createComponent(Component, name, options = {}) {
         Wrapper.displayName = name;
     }
     Wrapper.displayName = name;
-    Wrapper.extendProps = Extension => {
-        const extensions = Component.propExtensions || [];
-        Component.propExtensions = [...extensions, Extension];
-    };
-    Wrapper.extendComponent = (key, Extension) => {
-        let extensions = Component.componentExtensions;
+    Wrapper.extend = (key, Extension) => {
+        let extensions = Component.extensions;
         if (!extensions) {
-            extensions = Component.componentExtensions = {};
+            extensions = Component.extensions = {};
         }
         extensions[key] = Extension;
     };

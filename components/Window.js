@@ -12,9 +12,11 @@ import { createComponent } from "components/Util/Component";
 import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
 
-const Window = createComponent(({ state, region, header = undefined, footer = undefined, children }) => {
+const Window = createComponent(({ header = undefined, footer = undefined, children }) => {
     const ref = useStateRef();
     const el = ref?.current;
+    const state = Window.State.useState();
+    const region = Desktop.Region.useRegion();
     const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
@@ -81,9 +83,5 @@ Window.State = createState("Window.State");
 Window.Stack = createStack("Window.Stack", "root");
 Window.Title = Title;
 Window.StatusBar = StatusBar;
-Window.extendProps(() => ({
-    state: Window.State.useState(),
-    region: Desktop.Region.useRegion()
-}));
 
 export default Window;
