@@ -26,9 +26,8 @@ export default function Handle({ handle, enabled = true, children = null }) {
             return;
         }
         resizeState.resizing = true;
-        const handleRegion = e.target.getBoundingClientRect();
         const targetRegion = resizeState?.target.getBoundingClientRect();
-        resizeState.offset = [e.clientX - targetRegion.width + 1, e.clientY - targetRegion.height + 1];
+        resizeState.offset = [e.clientX - targetRegion.width, e.clientY - targetRegion.height];
         moveTarget(e);
     }, [resizeState, moveTarget]);
     useEventListener(resizeState?.resizing && globalDocument, "mousemove", moveTarget, [resizeState, moveTarget]);
