@@ -14,7 +14,7 @@ export default function Handle({ handle, enabled = true, children = null }) {
         }
         const targetLeft = e.clientX - left;
         const targetTop = e.clientY - top;
-        pos.current = [targetLeft, targetTop];
+        pos.current = { width: targetLeft, height: targetTop };
         if (typeof dragState.handler === "function") {
             [targetLeft, targetTop] = dragState.handler(targetLeft, targetTop);
         }
@@ -32,7 +32,7 @@ export default function Handle({ handle, enabled = true, children = null }) {
     }, [dragState, moveTarget]);
     useEventListener(dragState?.dragging && globalDocument, "mousemove", moveTarget, [dragState, moveTarget]);
     useEventListener(dragState?.dragging && globalDocument, "mouseup", e => {
-        Object.assign(dragState, { x: pos.current[0], y: pos.current[1], dragging: false });
+        Object.assign(dragState, { ...pos.current, dragging: false });
         moveTarget(e);
     }, [dragState, moveTarget]);
     return children;

@@ -14,7 +14,7 @@ export default function Handle({ handle, enabled = true, children = null }) {
         }
         const targetWidth = e.clientX - width;
         const targetHeight = e.clientY - height;
-        size.current = [targetWidth, targetHeight];
+        size.current = { width: targetWidth, height: targetHeight };
         if (typeof resizeState.handler === "function") {
             [targetWidth, targetHeight] = resizeState.handler(targetWidth, targetHeight);
         }
@@ -32,7 +32,7 @@ export default function Handle({ handle, enabled = true, children = null }) {
     }, [resizeState, moveTarget]);
     useEventListener(resizeState?.resizing && globalDocument, "mousemove", moveTarget, [resizeState, moveTarget]);
     useEventListener(resizeState?.resizing && globalDocument, "mouseup", e => {
-        Object.assign(resizeState, { width: size.current[0], height: size.current[1], resizing: false });
+        Object.assign(resizeState, { ...size.current, resizing: false });
         moveTarget(e);
     }, [resizeState, moveTarget]);
     return children;
