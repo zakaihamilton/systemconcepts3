@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import Window from "components/Window"
-import Desktop from "components/Desktop"
-import TaskBar from "components/Taskbar"
+import Window from "components/Core/Window"
+import Desktop from "components/Core/Desktop"
+import TaskBar from "components/Core/Taskbar"
 import AppLocalStorage from "components/App/Util/LocalStorage"
-import Storage from "components/Storage"
-import Node from "components/Util/Node"
+import Storage from "components/Core/Storage"
+import Node from "components/Core/Util/Node"
 
 export default function Home() {
   return (

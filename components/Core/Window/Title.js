@@ -1,7 +1,7 @@
 import styles from "./Title.module.scss";
 import Label from "./Title/Label";
-import Window from "components/Window";
-import { useClass } from "components/Util/Styles";
+import Window from "components/Core/Window";
+import { useClass } from "components/Core/Util/Styles";
 
 export default function Title({ children }) {
     const window = Window.State.useState();

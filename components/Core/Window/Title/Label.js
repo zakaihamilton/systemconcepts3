@@ -1,9 +1,9 @@
 import React from "react";
-import Drag from "components/Util/Drag";
+import Drag from "components/Core/Util/Drag";
 import styles from "./Label.module.scss";
-import { useStateRef } from "components/Util/Ref";
-import Window from "components/Window";
-import { useClass } from "components/Util/Styles";
+import { useStateRef } from "components/Core/Util/Ref";
+import Window from "components/Core/Window";
+import { useClass } from "components/Core/Util/Styles";
 import { useEffect } from "react";
 
 export default function Label({ children }) {

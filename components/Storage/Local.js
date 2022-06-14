@@ -1,5 +1,5 @@
-import { useEventListener } from "components/Util/EventListener";
-import { createState } from "components/Util/State";
+import { useEventListener } from "components/Core/Util/EventListener";
+import { createState } from "components/Core/Util/State";
 import { useState, useMemo } from "react";
 import { useCallback } from "react";
 

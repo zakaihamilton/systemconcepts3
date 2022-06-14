@@ -1,7 +1,7 @@
 import styles from "./Item.module.scss";
-import { useClass } from "components/Util/Styles";
+import { useClass } from "components/Core/Util/Styles";
 import Label from "./Item/Label";
-import { createState, useStateFromObject } from "components/Util/State";
+import { createState, useStateFromObject } from "components/Core/Util/State";
 
 export default function TaskbarItem({ }) {
     const state = TaskbarItem.State.useState();

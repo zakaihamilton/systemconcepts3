@@ -1,4 +1,4 @@
-import Resize from "components/Util/Resize";
+import Resize from "components/Core/Util/Resize";
 import React, { useCallback } from "react";
 
 export default function WindowResize({ children, state, el }) {

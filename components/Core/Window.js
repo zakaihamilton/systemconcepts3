@@ -8,7 +8,7 @@ import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
 import Desktop from "./Desktop";
 import Element from "./Util/Element";
-import { createComponent } from "components/Util/Component";
+import { createComponent } from "components/Core/Util/Component";
 import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
 

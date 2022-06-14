@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import styles from "./Label.module.scss";
-import Window from "components/Window";
+import Window from "components/Core/Window";
 import TaskbarItem from "../Item";
-import { useClass } from "components/Util/Styles";
+import { useClass } from "components/Core/Util/Styles";
 
 export default function Label({ children }) {
     const stack = Window.Stack.useState();

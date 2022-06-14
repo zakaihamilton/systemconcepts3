@@ -1,4 +1,4 @@
-import Drag from "components/Util/Drag";
+import Drag from "components/Core/Util/Drag";
 import React, { useCallback } from "react";
 
 export default function WindowDrag({ children, el, state, stack }) {
