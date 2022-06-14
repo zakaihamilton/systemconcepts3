@@ -37,10 +37,15 @@ export default function Node({ id, children }) {
     </Context.Provider>;
 }
 
-Node.useNode = (id) => {
+Node.useNode = (nodeId, propId) => {
     let node = useContext(Context);
-    if (id) {
-        while (node && node.get("id") !== id) {
+    if (nodeId) {
+        while (node && node.get("id") !== nodeId) {
+            node = node.parent;
+        }
+    }
+    if (propId) {
+        while (node && typeof node.get(propId) === "undefined") {
             node = node.parent;
         }
     }

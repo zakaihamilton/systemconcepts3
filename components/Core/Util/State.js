@@ -31,7 +31,7 @@ export function createState(displayName, nodeId) {
     }
     State.useState = (selector) => {
         const [, setCounter] = useState(0);
-        const node = Node.useNode(nodeId);
+        const node = Node.useNode(nodeId, State);
         const object = node.get(State);
         useEffect(() => {
             if (!object) {

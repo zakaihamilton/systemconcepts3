@@ -3,7 +3,7 @@ import Node from "../Node";
 
 export function createNotify(State, nodeId) {
     function NotifyState({ ...props }) {
-        const node = Node.useNode(nodeId);
+        const node = Node.useNode(nodeId, State);
         const object = node.get(State);
         const keys = Object.keys(props);
         const values = Object.values(props);

@@ -4,7 +4,7 @@ import Node from "../Node";
 
 export function createStorage(State, nodeId) {
     function StorageState({ id, load, save, children }) {
-        const node = Node.useNode(nodeId);
+        const node = Node.useNode(nodeId, State);
         const object = node.get(State);
         useEffect(() => {
             if (!load) {
