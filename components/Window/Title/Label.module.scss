@@ -26,3 +26,7 @@
     border-right: none;
     outline: none;
 }
+
+.root:not(.modal) {
+    cursor: pointer;
+}
