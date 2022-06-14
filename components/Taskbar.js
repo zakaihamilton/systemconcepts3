@@ -22,6 +22,8 @@ export default function Taskbar({ children = null }) {
     }
     return <div className={styles.root}>
         {children}
-        {items}
+        <div className={styles.items}>
+            {items}
+        </div>
     </div>;
 }
