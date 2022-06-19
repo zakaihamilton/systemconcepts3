@@ -8,15 +8,19 @@ export default function Taskbar({ children = null }) {
     const stack = Window.Stack.useState();
     const items = useMemo(() => {
         return stack?.items?.map((el, idx) => {
+            const window = el.state;
+            if (typeof window.taskbar !== "undefined" && !window.taskbar) {
+                return null;
+            }
             return <Node key={idx}>
-                <TaskbarItem.State window={el.state} />
+                <TaskbarItem.State window={window} />
                 <TaskbarItem />
             </Node>
-        });
+        }).filter(Boolean);
     }, [stack?.items]);
     if (stack?.items?.length === 1) {
         const window = stack.items[0].state;
-        if (window.fullscreen && !window.minimized) {
+        if ((window.fullscreen || window.maximized) && !window.minimized) {
             return null;
         }
     }

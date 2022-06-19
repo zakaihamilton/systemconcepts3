@@ -5,6 +5,10 @@
     min-height: 1.5em;
 }
 
+.root.fullscreen {
+    display: none;
+}
+
 .content {
     display: flex;
     flex: 1;

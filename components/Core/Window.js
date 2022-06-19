@@ -3,7 +3,7 @@ import styles from "./Window.module.scss";
 import { useStateRef } from "./Util/Ref";
 import { createStack } from "./Util/Stack";
 import { createState } from "./Util/State";
-import { useClass } from "./Util/Styles";
+import { cascade } from "./Util/Styles";
 import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
 import Desktop from "./Desktop";
@@ -11,6 +11,7 @@ import Element from "./Util/Element";
 import { createComponent } from "components/Core/Util/Component";
 import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
+import WindowActive from "./Window/Active";
 import { createRegion } from "./Util/Region";
 
 const Window = createComponent(({ header = undefined, footer = undefined, children }) => {
@@ -28,11 +29,14 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
     if (typeof footer === "undefined") {
         footer = <Window.StatusBar />;
     }
-    const classes = useClass(
+    const classes = cascade(
         styles.root,
         active && styles.active,
         state?.fullscreen && styles.fullscreen,
-        state?.minimized && styles.minimized);
+        state?.maximized && styles.maximized,
+        state?.minimized && styles.minimized,
+        state?.center && styles.center,
+        !region && state?.center && styles.hidden);
     const onMouseDown = useCallback(() => {
         if (!active) {
             stack?.setFocus(el);
@@ -40,14 +44,18 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
     }, [stack, el, active]);
     const style = useMemo(() => {
         let left = "0", top = "0", width = "initial", height = "initial";
-        if (!state?.fullscreen) {
-            left = state.movableLeft + "px";
-            top = state.movableTop + "px";
-            width = state.resizableWidth + "px";
-            height = state.resizableHeight + "px";
+        if (state?.center && region) {
+            left = "50%";
+            top = "50%";
+        }
+        else if (!state?.fullscreen && !state?.maximized) {
+            left = state.left;
+            top = state.top;
+            width = state.width;
+            height = state.height;
         }
         return { zIndex, left, top, width, height };
-    }, [state?.fullscreen, state.movableLeft, state.movableTop, state.resizableWidth, state.resizableHeight, zIndex]);
+    }, [state?.fullscreen, state?.center, state?.maximized, state.left, state.top, state.width, state.height, zIndex, region]);
     useEffect(() => {
         if (el && state) {
             el.state = state;
@@ -59,33 +67,25 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
             state.active = active;
         }
     }, [state, active]);
-    useEffect(() => {
-        if (state?.center && region) {
-            const margin = 60;
-            state.movableLeft = margin;
-            state.movableTop = margin;
-            state.resizableWidth = region.width - (margin * 2);
-            state.resizableHeight = region.height - (margin * 2);
-        }
-    }, [region, state, state?.center]);
-    return <WindowDrag state={state} stack={stack} el={el}>
-        <WindowResize state={state} el={el}>
-            <Element ref={windowRef} style={style} className={classes} onMouseDown={onMouseDown}>
-                {header}
-                <div ref={contentRef} className={styles.content}>
-                    <Window.Region target={contentRef?.current} />
-                    {children}
-                </div>
-                {footer}
-            </Element>
-        </WindowResize>
-    </WindowDrag>;
+    return <>
+        <WindowDrag state={state} stack={stack} el={el} />
+        <WindowResize state={state} el={el} />
+        <Element ref={windowRef} style={style} className={classes} onMouseDown={onMouseDown}>
+            {header}
+            <div ref={contentRef} className={styles.content}>
+                {children}
+            </div>
+            <Window.Region target={contentRef?.current} />
+            {footer}
+        </Element>
+    </>;
 }, "Window");
 
 Window.State = createState("Window.State");
 Window.Stack = createStack("Window.Stack", "root");
 Window.Title = Title;
 Window.StatusBar = StatusBar;
+Window.Active = WindowActive;
 Window.Region = createRegion();
 
 export default Window;

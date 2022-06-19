@@ -1,12 +1,12 @@
 import styles from "./Item.module.scss";
-import { useClass } from "components/Core/Util/Styles";
+import { cascade } from "components/Core/Util/Styles";
 import Label from "./Item/Label";
 import { createState, useStateFromObject } from "components/Core/Util/State";
 
 export default function TaskbarItem({ }) {
     const state = TaskbarItem.State.useState();
     useStateFromObject(state?.window);
-    return <div className={useClass(styles.root, state?.window?.active && styles.active)}>
+    return <div className={cascade(styles.root, state?.window?.active && styles.active)}>
         <Label>
             {state?.window?.label}
         </Label>

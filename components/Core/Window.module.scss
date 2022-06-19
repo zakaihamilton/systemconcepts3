@@ -7,23 +7,25 @@
     position: absolute;
     overflow: hidden;
     will-change: transform;
+    opacity: 1;
 }
 
-.root:not(.fullscreen) {
+.root:not(.fullscreen):not(.maximized) {
     border-radius: 0.5em;
     border: 1px solid darkgray;
 }
 
-.root:not(.fullscreen).active {
+.root:not(.fullscreen):not(.maximized).active {
     border: 1px solid white;
 }
 
-.root.active:not(.fullscreen) {
+.root.active:not(.fullscreen):not(.maximized) {
     filter: drop-shadow(1px 2px 4px black);
     border: 1px solid black;
 }
 
-.root.fullscreen {
+.root.fullscreen,
+.root.maximized {
     left: 0px;
     right: 0px;
     top: 0px;
@@ -38,4 +40,13 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+    overflow: hidden;
+}
+
+.root.hidden {
+    opacity: 0;
+}
+
+.root.center {
+    transform: translate(-50%, -50%);
 }

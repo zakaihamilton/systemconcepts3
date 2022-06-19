@@ -1,12 +1,11 @@
 .root {
     display: flex;
     align-items: stretch;
-    border: 1px solid darkgray;
     background-color: lightgray;
     margin: 0.1em;
+    border-bottom:2px solid transparent;
 }
 
 .root.active {
-    background-color: white;
-    outline: 1px solid black;
+    border-bottom:2px solid black;
 }

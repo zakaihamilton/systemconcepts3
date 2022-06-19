@@ -1,23 +1,22 @@
 import Drag from "components/Core/Util/Drag";
 import React, { useCallback } from "react";
 
-export default function WindowDrag({ children, el, state, stack }) {
-    const onDragging = useCallback((dragging, drag) => {
-        if (state && !dragging) {
-            state.movableLeft = drag.x;
-            state.movableTop = drag.y;
-            state.center = false;
+export default function WindowDrag({ el, state, stack }) {
+    const onDragging = useCallback((_, drag) => {
+        if (state) {
+            state.left = drag.x;
+            state.top = drag.y;
         }
     }, [state]);
     const dragHandler = useCallback((left, top) => {
         if (state) {
-            const fullscreen = top < 0;
-            if (!state.fullscreen !== !fullscreen) {
-                state.fullscreen = top < 0;
+            const maximized = top < 50;
+            if (!state.maximized !== !maximized) {
+                state.maximized = maximized;
                 stack.items = [...stack.items];
             }
         }
-        if (top < 0) {
+        if (top < 50) {
             top = 0;
             left = 0;
         }
@@ -27,6 +26,5 @@ export default function WindowDrag({ children, el, state, stack }) {
         <Drag handler={dragHandler} />
         <Drag.Target target={el} />
         <Drag.State.Notify dragging={onDragging} />
-        {children}
     </>;
 }

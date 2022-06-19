@@ -1,14 +1,11 @@
-import { useContext, useEffect } from "react";
-import Node from "../Node";
+import { useEffect } from "react";
 
-
-export function createStorage(State, nodeId) {
-    function StorageState({ id, load, save, children }) {
-        const node = Node.useNode(nodeId, State);
-        const object = node.get(State);
+export function createStorage(State) {
+    function StorageState({ id, load, save }) {
+        const object = State.useState();
         useEffect(() => {
-            if (!load) {
-                return null;
+            if (!load || !object) {
+                return;
             }
             const result = load(id);
             if (result?.then) {
@@ -21,7 +18,7 @@ export function createStorage(State, nodeId) {
                 Object.assign(object, result);
             }
             // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [load, id]);
+        }, [load, id, object]);
         useEffect(() => {
             const saveValues = () => {
                 save(id, object);
@@ -36,7 +33,6 @@ export function createStorage(State, nodeId) {
             };
             // eslint-disable-next-line react-hooks/exhaustive-deps            
         }, [save, id]);
-        return children;
     };
     return StorageState;
 }

@@ -15,18 +15,19 @@
     outline: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.root:not(.modal):active {
+.root:not(.modal):not(.center):active {
     background-color: lightgray;
     border-bottom: 1px solid white;
     border-right: 1px solid white;
     color: black;
 }
 
-.root.modal {
+.root.modal,
+.root.center {
     border-right: none;
     outline: none;
 }
 
-.root:not(.modal) {
+.root:not(.modal):not(.center) {
     cursor: pointer;
 }

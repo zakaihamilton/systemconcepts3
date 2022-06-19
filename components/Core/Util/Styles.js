@@ -1,3 +1,3 @@
-export function useClass(...classes) {
+export function cascade(...classes) {
     return classes.filter(Boolean).join(" ");
 }

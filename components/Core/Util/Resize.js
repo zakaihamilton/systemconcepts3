@@ -3,10 +3,8 @@ import Handle from "./Resize/Handle";
 import Target from "./Resize/Target";
 import { createState } from "./State";
 
-export default function Resize({ children }) {
-    return <Resize.State>
-        {children}
-    </Resize.State>;
+export default function Resize({ ...state }) {
+    return <Resize.State {...state} />;
 }
 
 Resize.State = createState("Resize.State");
