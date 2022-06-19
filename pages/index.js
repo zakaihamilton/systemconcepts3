@@ -17,19 +17,18 @@ export default function Home() {
 
       <Window.Stack />
       <Desktop>
-        <Storage>
-          <Node>
-            <Window.State label="Title" />
-            <Window />
-          </Node>
-          <Node>
-            <Window.State label="Title 2" center modal alwaysontop />
-            <Window />
-          </Node>
-          <Node>
-            <AppLocalStorage />
-          </Node>
-        </Storage>
+        <Storage />
+        <Node>
+          <Window.State label="Title" />
+          <Window />
+        </Node>
+        <Node>
+          <Window.State label="Title 2" center modal alwaysontop />
+          <Window />
+        </Node>
+        <Node>
+          <AppLocalStorage />
+        </Node>
       </Desktop>
       <TaskBar />
     </>

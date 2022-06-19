@@ -1,5 +1,3 @@
-import Node from "../Node";
-
 export function createChildren(State) {
     function ChildrenState({ children, ...fields }) {
         const object = State.useState();

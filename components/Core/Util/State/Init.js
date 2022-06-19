@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Node from "../Node";
 
 export function createInit(State) {
     function InitState({ ...props }) {
