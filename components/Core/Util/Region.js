@@ -20,14 +20,12 @@ export function useRegion(target) {
     return region;
 }
 
-export function createRegion() {
-    function Region({ target, children = null }) {
+export function createRegion(nodeId) {
+    function Region({ target }) {
         const region = useRegion(target);
-        return <Region.State region={region}>
-            {children}
-        </Region.State>;
+        return <Region.State region={region} />;
     }
-    Region.State = createState("Region.State");
+    Region.State = createState("Region.State", nodeId);
     Region.useRegion = () => {
         const state = Region.State.useState();
         return state?.region;

@@ -11,10 +11,12 @@ import Element from "./Util/Element";
 import { createComponent } from "components/Core/Util/Component";
 import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
+import { createRegion } from "./Util/Region";
 
 const Window = createComponent(({ header = undefined, footer = undefined, children }) => {
-    const ref = useStateRef();
-    const el = ref?.current;
+    const windowRef = useStateRef();
+    const contentRef = useStateRef();
+    const el = windowRef?.current;
     const state = Window.State.useState();
     const region = Desktop.Region.useRegion();
     const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
@@ -68,9 +70,10 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
     }, [region, state, state?.center]);
     return <WindowDrag state={state} stack={stack} el={el}>
         <WindowResize state={state} el={el}>
-            <Element ref={ref} style={style} className={classes} onMouseDown={onMouseDown}>
+            <Element ref={windowRef} style={style} className={classes} onMouseDown={onMouseDown}>
                 {header}
-                <div className={styles.content}>
+                <div ref={contentRef} className={styles.content}>
+                    <Window.Region target={contentRef?.current} />
                     {children}
                 </div>
                 {footer}
@@ -83,5 +86,6 @@ Window.State = createState("Window.State");
 Window.Stack = createStack("Window.Stack", "root");
 Window.Title = Title;
 Window.StatusBar = StatusBar;
+Window.Region = createRegion();
 
 export default Window;
