@@ -110,12 +110,12 @@ export function useData({ url, options, mapping, queue, cache, counter = 0 }) {
         return () => {
             availableRef.current = false;
         };
-    }, [url, options, counter]);
+    }, [url, options, counter, cache, queue, mapData, mapping]);
     useEffect(() => {
         mapData(data, mapping).then(mapped => {
             setMapped(mapped);
         });
-    }, [mapping]);
+    }, [data, mapData, mapping]);
     return [mapped, loading, valid];
 }
 
