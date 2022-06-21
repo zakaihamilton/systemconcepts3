@@ -11,7 +11,7 @@ export default function WindowResize({ state, el }) {
 
     return <>
         <Resize />
-        <Resize.Target target={el} />
+        <Resize.State target={el} />
         <Resize.State.Notify resizing={onResizing} />
     </>;
 }

@@ -1,17 +1,10 @@
 export function createChildren(State) {
-    function ChildrenState({ children, ...fields }) {
+    function ChildrenState({ children }) {
         const object = State.useState();
-        children = [...children || []];
-        for (const key in fields) {
-            const cb = fields[key];
-            if (typeof cb === "function") {
-                const result = cb(object[key]);
-                if (result) {
-                    children.push(result);
-                }
-            }
+        if (typeof children !== "function") {
+            return;
         }
-        return children;
+        return children(object);
     }
     return ChildrenState;
 }

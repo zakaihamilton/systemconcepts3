@@ -9,22 +9,23 @@ export default function WindowDrag({ el, state, stack }) {
         }
     }, [state]);
     const dragHandler = useCallback((left, top) => {
+        const threshold = state?.threshold || 24;
         if (state) {
-            const maximized = top < 50;
+            const maximized = top < threshold;
             if (!state.maximized !== !maximized) {
                 state.maximized = maximized;
                 stack.items = [...stack.items];
             }
         }
-        if (top < 50) {
+        if (top < threshold) {
             top = 0;
             left = 0;
         }
         return [left, top];
     }, [state, stack]);
     return <>
-        <Drag handler={dragHandler} />
-        <Drag.Target target={el} />
+        <Drag />
+        <Drag.State handler={dragHandler} target={el} />
         <Drag.State.Notify dragging={onDragging} />
     </>;
 }

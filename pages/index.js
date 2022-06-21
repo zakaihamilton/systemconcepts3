@@ -5,6 +5,7 @@ import TaskBar from "components/Core/Taskbar"
 import AppLocalStorage from "components/App/Util/LocalStorage"
 import Storage from "components/Core/Storage"
 import Node from "components/Core/Util/Node"
+import Disable from "components/Core/Util/Disable"
 
 export default function Home() {
   return (
@@ -22,13 +23,15 @@ export default function Home() {
           <Window.State label="Title" />
           <Window />
         </Node>
-        <Node>
-          <Window.State label="Title 2" center modal alwaysontop />
-          <Window />
-        </Node>
-        <Node>
-          <AppLocalStorage />
-        </Node>
+        <Disable>
+          <Node>
+            <Window.State label="Title 2" center modal alwaysontop />
+            <Window />
+          </Node>
+          <Node>
+            <AppLocalStorage />
+          </Node>
+        </Disable>
       </Desktop>
       <TaskBar />
     </>

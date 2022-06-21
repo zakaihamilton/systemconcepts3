@@ -19,9 +19,10 @@ export default function Label({ children }) {
             window.label = String(children);
         }
     }, [window, children]);
-    return <Drag.Handle handle={ref?.current} enabled={!window?.modal && !window?.center}>
+    return <>
         <div ref={ref} className={classes}>
             {children}
         </div>
-    </Drag.Handle>;
+        <Drag.State handle={ref?.current} enabled={!window?.modal && !window?.center} />
+    </>;
 }

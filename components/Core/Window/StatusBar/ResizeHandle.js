@@ -9,9 +9,10 @@ export default function ResizeHandle({ }) {
     const ref = useStateRef();
     const window = Window.State.useState();
     const enabled = !window?.fullscreen && !window?.maximized && window?.active;
-    return <Resize.Handle enabled={enabled} handle={ref?.current}>
+    return <>
         <div ref={ref} className={cascade(styles.root, enabled && styles.enabled)}>
             <MdDragHandle />
         </div>
-    </Resize.Handle>;
+        <Resize.State enabled={enabled} handle={ref?.current} />
+    </>;
 }
