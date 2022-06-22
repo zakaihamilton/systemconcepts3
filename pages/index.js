@@ -23,11 +23,11 @@ export default function Home() {
           <Window.State label="Title" />
           <Window />
         </Node>
+        <Node>
+          <Window.State label="Title 2" center modal alwaysontop resizable={false} />
+          <Window />
+        </Node>
         <Disable>
-          <Node>
-            <Window.State label="Title 2" center modal alwaysontop />
-            <Window />
-          </Node>
           <Node>
             <AppLocalStorage />
           </Node>

@@ -8,7 +8,7 @@ import { MdDragHandle } from 'react-icons/md';
 export default function ResizeHandle({ }) {
     const ref = useStateRef();
     const window = Window.State.useState();
-    const enabled = !window?.fullscreen && !window?.maximized && window?.active;
+    const enabled = !window?.fullscreen && !window?.maximized && window?.active && (window?.resizable ?? true);
     return <>
         <div ref={ref} className={cascade(styles.root, enabled && styles.enabled)}>
             <MdDragHandle />

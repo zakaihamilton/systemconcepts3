@@ -13,8 +13,9 @@ import WindowDrag from "./Window/Drag";
 import WindowResize from "./Window/Resize";
 import WindowActive from "./Window/Active";
 import { createRegion } from "./Util/Region";
+import ResizeHandle from "./Window/ResizeHandle";
 
-const Window = createComponent(({ header = undefined, footer = undefined, children }) => {
+const Window = createComponent(({ children }) => {
     const windowRef = useStateRef();
     const contentRef = useStateRef();
     const el = windowRef?.current;
@@ -23,11 +24,12 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
     const stack = Window.Stack.useInStack(el, !state?.minimized, state?.alwaysontop);
     const active = stack?.focus && stack.focus[stack.focus.length - 1] === el;
     const zIndex = stack?.focus && stack.focus.findIndex(item => item === el) * 100;
-    if (typeof header === "undefined") {
+    let header = null, footer = null;
+    if (typeof state?.header === "undefined") {
         header = <Window.Title />;
     }
-    if (typeof footer === "undefined") {
-        footer = <Window.StatusBar />;
+    else {
+        header = state?.header;
     }
     const classes = cascade(
         styles.root,
@@ -76,7 +78,8 @@ const Window = createComponent(({ header = undefined, footer = undefined, childr
                 {children}
             </div>
             <Window.Region target={contentRef?.current} />
-            {footer}
+            {state?.footer}
+            <ResizeHandle />
         </Element>
     </>;
 }, "Window");

@@ -1,7 +1,6 @@
 import { cascade } from "../Util/Styles";
 import Window from "../Window";
 import styles from "./StatusBar.module.scss";
-import ResizeHandle from "./StatusBar/ResizeHandle";
 
 export default function StatusBar({ children }) {
     const window = Window.State.useState();
@@ -15,6 +14,5 @@ export default function StatusBar({ children }) {
         <div className={styles.content}>
             {children}
         </div>
-        <ResizeHandle />
     </div>;
 }
