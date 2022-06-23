@@ -16,10 +16,10 @@ export default function Resize() {
         const [width, height] = resizeState?.offset;
         let targetWidth = e.clientX - width;
         let targetHeight = e.clientY - height;
-        size.current = { width: targetWidth, height: targetHeight };
         if (typeof resizeState.handler === "function") {
             [targetWidth, targetHeight] = resizeState.handler(targetWidth, targetHeight);
         }
+        size.current = { width: targetWidth, height: targetHeight };
         resizeState.target.style.width = targetWidth + 'px';
         resizeState.target.style.height = targetHeight + 'px';
         return e.type !== "mouseup";

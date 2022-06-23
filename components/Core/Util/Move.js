@@ -10,8 +10,7 @@ export default function Move() {
             moveState.moving = true;
             const handleRegion = e.target.getBoundingClientRect();
             moveState.offset = [e.clientX - handleRegion.left + 1, e.clientY - handleRegion.top + 1];
-        }
-        else if (e.type === "mouseup") {
+        } else if (e.type === "mouseup") {
             Object.assign(moveState, { ...pos.current, moving: false });
         }
         const [left, top] = moveState?.offset;
