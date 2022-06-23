@@ -1,14 +1,14 @@
-import Drag from "components/Core/Util/Drag";
+import Move from "components/Core/Util/Move";
 import React, { useCallback } from "react";
 
-export default function WindowDrag({ el, state, stack }) {
-    const onDragging = useCallback((_, drag) => {
+export default function WindowMove({ el, state, stack }) {
+    const onMove = useCallback((_, pos) => {
         if (state) {
-            state.left = drag.x;
-            state.top = drag.y;
+            state.left = pos.x;
+            state.top = pos.y;
         }
     }, [state]);
-    const dragHandler = useCallback((left, top) => {
+    const moveHandler = useCallback((left, top) => {
         const threshold = state?.threshold || 24;
         if (state) {
             const maximized = top < threshold;
@@ -24,8 +24,8 @@ export default function WindowDrag({ el, state, stack }) {
         return [left, top];
     }, [state, stack]);
     return <>
-        <Drag />
-        <Drag.State handler={dragHandler} target={el} />
-        <Drag.State.Notify dragging={onDragging} />
+        <Move />
+        <Move.State handler={moveHandler} target={el} />
+        <Move.State.Notify moving={onMove} />
     </>;
 }

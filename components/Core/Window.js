@@ -9,7 +9,7 @@ import Title from "./Window/Title";
 import Desktop from "./Desktop";
 import Element from "./Util/Element";
 import { createComponent } from "components/Core/Util/Component";
-import WindowDrag from "./Window/Drag";
+import WindowMove from "./Window/Move";
 import WindowResize from "./Window/Resize";
 import WindowActive from "./Window/Active";
 import { createRegion } from "./Util/Region";
@@ -70,7 +70,7 @@ const Window = createComponent(({ children }) => {
         }
     }, [state, active]);
     return <>
-        <WindowDrag state={state} stack={stack} el={el} />
+        <WindowMove state={state} stack={stack} el={el} />
         <WindowResize state={state} el={el} />
         <Element ref={windowRef} style={style} className={classes} onMouseDown={onMouseDown}>
             {header}

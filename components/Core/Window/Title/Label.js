@@ -1,5 +1,5 @@
 import React from "react";
-import Drag from "components/Core/Util/Drag";
+import Move from "components/Core/Util/Move";
 import styles from "./Label.module.scss";
 import { useStateRef } from "components/Core/Util/Ref";
 import Window from "components/Core/Window";
@@ -23,6 +23,6 @@ export default function Label({ children }) {
         <div ref={ref} className={classes}>
             {children}
         </div>
-        <Drag.State handle={ref?.current} enabled={!window?.modal && !window?.center} />
+        <Move.State handle={ref?.current} enabled={!window?.modal && !window?.center} />
     </>;
 }
