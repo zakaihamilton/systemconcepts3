@@ -4,26 +4,26 @@ import useElementDrag from "./Drag";
 
 export default function Move() {
     const pos = useRef();
-    const moveState = Move.State.useState();
-    useElementDrag(moveState?.enabled && moveState?.target && moveState?.handle, e => {
+    const state = Move.State.useState();
+    useElementDrag(state?.enabled && state?.target && state?.handle, e => {
         if (e.type === "mousedown") {
-            moveState.moving = true;
-            const handleRegion = e.target.getBoundingClientRect();
-            moveState.offset = [e.clientX - handleRegion.left + 1, e.clientY - handleRegion.top + 1];
+            state.moving = true;
+            const handleRegion = state?.target?.getBoundingClientRect();
+            state.offset = [e.clientX - handleRegion.left, e.clientY - handleRegion.top];
         } else if (e.type === "mouseup") {
-            Object.assign(moveState, { ...pos.current, moving: false });
+            Object.assign(state, { ...pos.current, moving: false });
         }
-        const [left, top] = moveState?.offset;
+        const [left, top] = state?.offset;
         let targetLeft = e.clientX - left;
         let targetTop = e.clientY - top;
-        if (typeof moveState.handler === "function") {
-            [targetLeft, targetTop] = moveState.handler(targetLeft, targetTop);
+        if (typeof state.handler === "function") {
+            [targetLeft, targetTop] = state.handler(targetLeft, targetTop);
         }
-        pos.current = { width: targetLeft, height: targetTop };
-        moveState.target.style.left = targetLeft + 'px';
-        moveState.target.style.top = targetTop + 'px';
+        pos.current = { left: targetLeft, top: targetTop };
+        state.target.style.left = targetLeft + 'px';
+        state.target.style.top = targetTop + 'px';
         return e.type !== "mouseup";
-    }, [moveState]);
+    }, [state]);
 }
 
 Move.State = createState("Move.State");
