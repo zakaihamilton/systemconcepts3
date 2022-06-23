@@ -1,33 +1,31 @@
 import { createState } from "./State";
-import { useCallback, useRef } from "react";
-import { useEventListener } from "./EventListener";
+import { useRef } from "react";
+import useElementDrag from "./Drag";
 
 export default function Move() {
     const pos = useRef();
     const moveState = Move.State.useState();
-    const globalDocument = typeof document !== "undefined" && document;
-    const moveTarget = useCallback(e => {
+    useElementDrag(moveState?.enabled && moveState?.handle, e => {
+        console.log("e", e);
+        if (e.type === "mousedown") {
+            moveState.moving = true;
+            const handleRegion = e.target.getBoundingClientRect();
+            moveState.offset = [e.clientX - handleRegion.left + 1, e.clientY - handleRegion.top + 1];
+        }
+        else if (e.type === "mouseup") {
+            Object.assign(moveState, { ...pos.current, moving: false });
+        }
         const [left, top] = moveState?.offset;
-        const targetLeft = e.clientX - left;
-        const targetTop = e.clientY - top;
+        let targetLeft = e.clientX - left;
+        let targetTop = e.clientY - top;
         if (typeof moveState.handler === "function") {
             [targetLeft, targetTop] = moveState.handler(targetLeft, targetTop);
         }
         pos.current = { width: targetLeft, height: targetTop };
         moveState.target.style.left = targetLeft + 'px';
         moveState.target.style.top = targetTop + 'px';
+        return e.type !== "mouseup";
     }, [moveState]);
-    useEventListener(moveState?.enabled && moveState?.handle, "mousedown", e => {
-        moveState.moving = true;
-        const handleRegion = e.target.getBoundingClientRect();
-        moveState.offset = [e.clientX - handleRegion.left + 1, e.clientY - handleRegion.top + 1];
-        moveTarget(e);
-    }, [moveState, moveTarget]);
-    useEventListener(moveState?.moving && globalDocument, "mousemove", moveTarget, [moveState, moveTarget]);
-    useEventListener(moveState?.moving && globalDocument, "mouseup", e => {
-        Object.assign(moveState, { ...pos.current, moving: false });
-        moveTarget(e);
-    }, [moveState, moveTarget]);
 }
 
 Move.State = createState("Move.State");
