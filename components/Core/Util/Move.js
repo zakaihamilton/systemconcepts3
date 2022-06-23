@@ -10,10 +10,10 @@ export default function Move() {
         const [left, top] = moveState?.offset;
         const targetLeft = e.clientX - left;
         const targetTop = e.clientY - top;
-        pos.current = { width: targetLeft, height: targetTop };
         if (typeof moveState.handler === "function") {
             [targetLeft, targetTop] = moveState.handler(targetLeft, targetTop);
         }
+        pos.current = { width: targetLeft, height: targetTop };
         moveState.target.style.left = targetLeft + 'px';
         moveState.target.style.top = targetTop + 'px';
     }, [moveState]);
