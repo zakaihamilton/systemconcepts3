@@ -5,8 +5,7 @@ import useElementDrag from "./Drag";
 export default function Move() {
     const pos = useRef();
     const moveState = Move.State.useState();
-    useElementDrag(moveState?.enabled && moveState?.handle, e => {
-        console.log("e", e);
+    useElementDrag(moveState?.enabled && moveState?.target && moveState?.handle, e => {
         if (e.type === "mousedown") {
             moveState.moving = true;
             const handleRegion = e.target.getBoundingClientRect();
