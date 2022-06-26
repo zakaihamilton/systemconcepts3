@@ -9,11 +9,11 @@ export default function Resize() {
         if (e.type === "mousedown") {
             state.resizing = true;
             const targetRegion = state?.target?.getBoundingClientRect();
-            state.offset = [e.clientX - targetRegion.width, e.clientY - targetRegion.height];
+            state.size = [e.clientX - targetRegion.width, e.clientY - targetRegion.height];
         } else if (e.type === "mouseup") {
             Object.assign(state, { ...size.current, resizing: false });
         }
-        const [width, height] = state?.offset;
+        const [width, height] = state?.size;
         let targetWidth = e.clientX - width;
         let targetHeight = e.clientY - height;
         if (typeof state.handler === "function") {

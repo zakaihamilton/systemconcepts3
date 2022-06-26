@@ -8,8 +8,8 @@ export default function Move() {
     useElementDrag(state?.enabled && state?.target && state?.handle, e => {
         if (e.type === "mousedown") {
             state.moving = true;
-            const handleRegion = state?.target?.getBoundingClientRect();
-            state.offset = [e.clientX - handleRegion.left, e.clientY - handleRegion.top];
+            const targetRegion = state?.target?.getBoundingClientRect();
+            state.offset = [e.clientX - targetRegion.left, e.clientY - targetRegion.top];
         } else if (e.type === "mouseup") {
             Object.assign(state, { ...pos.current, moving: false });
         }
