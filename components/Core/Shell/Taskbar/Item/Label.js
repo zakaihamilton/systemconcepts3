@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import styles from "./Label.module.scss";
-import Window from "components/Core/Window";
+import Window from "components/Core/UI/Window";
 import TaskbarItem from "../Item";
 import { cascade } from "components/Core/Util/Styles";
 

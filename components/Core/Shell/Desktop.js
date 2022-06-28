@@ -1,6 +1,6 @@
 import styles from "./Desktop.module.scss";
-import { useStateRef } from "./Util/Ref";
-import { createRegion } from "./Util/Region";
+import { useStateRef } from "components/Core/Util/Ref";
+import { createRegion } from "components/Core/Util/Region";
 
 export default function Desktop({ children }) {
     const ref = useStateRef();

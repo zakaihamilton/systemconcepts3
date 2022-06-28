@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import styles from "./Taskbar.module.scss";
 import TaskbarItem from "./Taskbar/Item";
-import Node from "./Util/Node";
-import Window from "./Window";
+import Node from "components/Core/Util/Node";
+import Window from "components/Core/UI/Window";
 
 export default function Taskbar({ children = null }) {
     const stack = Window.Stack.useState();

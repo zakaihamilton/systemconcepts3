@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import styles from "./Window.module.scss";
-import { useStateRef } from "./Util/Ref";
-import { createStack } from "./Util/Stack";
-import { createState } from "./Util/State";
-import { cascade } from "./Util/Styles";
+import { useStateRef } from "components/Core/Util/Ref";
+import { createStack } from "components/Core/Util/Stack";
+import { createState } from "components/Core/Util/State";
+import { cascade } from "components/Core/Util/Styles";
 import StatusBar from "./Window/StatusBar";
 import Title from "./Window/Title";
-import Desktop from "./Desktop";
-import Element from "./Util/Element";
+import Desktop from "components/Core/Shell/Desktop";
+import Element from "components/Core/Util/Element";
 import { createComponent } from "components/Core/Util/Component";
 import WindowMove from "./Window/Move";
 import WindowResize from "./Window/Resize";
 import WindowActive from "./Window/Active";
-import { createRegion } from "./Util/Region";
+import { createRegion } from "components/Core/Util/Region";
 import ResizeHandle from "./Window/ResizeHandle";
 
 const Window = createComponent(({ children }) => {

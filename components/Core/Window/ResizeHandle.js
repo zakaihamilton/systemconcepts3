@@ -1,7 +1,7 @@
 import styles from "./ResizeHandle.module.scss";
 import Resize from "components/Core/Util/Resize";
 import { useStateRef } from "components/Core/Util/Ref";
-import Window from "components/Core/Window";
+import Window from "components/Core/UI/Window";
 import { cascade } from "components/Core/Util/Styles";
 import { MdDragHandle } from 'react-icons/md';
 

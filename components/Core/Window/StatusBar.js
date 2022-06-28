@@ -1,4 +1,4 @@
-import { cascade } from "../Util/Styles";
+import { cascade } from "components/Core/Util/Styles";
 import Window from "../Window";
 import styles from "./StatusBar.module.scss";
 

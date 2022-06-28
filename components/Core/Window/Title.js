@@ -1,6 +1,6 @@
 import styles from "./Title.module.scss";
 import Label from "./Title/Label";
-import Window from "components/Core/Window";
+import Window from "components/Core/UI/Window";
 import { cascade } from "components/Core/Util/Styles";
 
 export default function Title({ children }) {

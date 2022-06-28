@@ -1,5 +1,5 @@
 import React from "react";
-import Window from "components/Core/Window"
+import Window from "components/Core/UI/Window"
 
 export default function AppLocalStorage({ }) {
     return <>

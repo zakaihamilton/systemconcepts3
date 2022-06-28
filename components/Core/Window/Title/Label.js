@@ -2,7 +2,7 @@ import React from "react";
 import Move from "components/Core/Util/Move";
 import styles from "./Label.module.scss";
 import { useStateRef } from "components/Core/Util/Ref";
-import Window from "components/Core/Window";
+import Window from "components/Core/UI/Window";
 import { cascade } from "components/Core/Util/Styles";
 import { useEffect } from "react";
 
