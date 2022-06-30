@@ -30,6 +30,11 @@ export function createState(displayName, nodeId) {
         }, [changeRef.current]);
         return children;
     }
+    State.usePassiveState = () => {
+        const node = Node.useNode(nodeId, State);
+        const object = node && node.get(State);
+        return object;
+    };
     State.useState = (selector) => {
         const [, setCounter] = useState(0);
         const node = Node.useNode(nodeId, State);

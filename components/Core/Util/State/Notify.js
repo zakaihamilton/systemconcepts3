@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 
-export function createNotify(State, nodeId) {
+export function createNotify(State) {
     function NotifyState({ ...props }) {
-        const object = State.useState();
+        const object = State.usePassiveState();
         const keys = Object.keys(props);
         const values = Object.values(props);
         useEffect(() => {

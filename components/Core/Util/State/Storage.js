@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export function createStorage(State) {
     function StorageState({ id, load, save }) {
-        const object = State.useState();
+        const object = State.usePassiveState();
         useEffect(() => {
             if (!load || !object) {
                 return;
