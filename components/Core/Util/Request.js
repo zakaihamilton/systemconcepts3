@@ -10,10 +10,22 @@ export function createRequest(displayName = "", nodeId) {
         const parseHandlers = Request.Handler.Parse.useHandlers();
         const counter = useCounter(Request.State);
 
+        const callHandlers = useCallback((handlers, params) => {
+            if (!handlers) {
+                return;
+            }
+            for (const handler of handlers) {
+                const result = handler(params);
+                if (result) {
+                    return result;
+                }
+            }
+        }, []);
+
         useEffect(() => {
-            prepareHandlers?.forEach(handler => handler(params));
-            fetchHandlers?.forEach(handler => handler(params));
-            parseHandlers?.forEach(handler => handler(params));
+            callHandlers(prepareHandlers, params);
+            callHandlers(fetchHandlers, params);
+            callHandlers(parseHandlers, params);
             // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [counter]);
 
