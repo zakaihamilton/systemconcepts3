@@ -7,9 +7,9 @@ import { createInit } from "./State/Init";
 import { createNotify } from "./State/Notify";
 import { createStorage } from "./State/Storage";
 
-export function createState(displayName, nodeId) {
+export function createState(displayName, baseNodeId) {
     function State({ children, ...props }) {
-        const node = Node.useNode(nodeId);
+        const node = Node.useNode(baseNodeId);
         let object = node.get(State);
         const [updatedProps, setUpdatedProps] = useState({ ...props });
         const valueChanged = object && objectHasChanged(props, updatedProps);
@@ -34,14 +34,14 @@ export function createState(displayName, nodeId) {
         }, [changeRef.current]);
         return children;
     }
-    State.usePassiveState = () => {
-        const node = Node.useNode(nodeId, State);
+    State.usePassiveState = (nodeId) => {
+        const node = Node.useNode(nodeId || baseNodeId, State);
         const object = node && node.get(State);
         return object;
     };
-    State.useState = (selector) => {
+    State.useState = (selector, nodeId) => {
         const [, setCounter] = useState(0);
-        const node = Node.useNode(nodeId, State);
+        const node = Node.useNode(nodeId || baseNodeId, State);
         const object = node && node.get(State);
         useEffect(() => {
             if (!object) {
