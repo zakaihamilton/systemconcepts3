@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import Node from "./Node";
 import { objectHasChanged, createObjectProxy } from "./Object";
 import { createChildren } from "./State/Children";
+import { createCounter } from "./State/Counter";
 import { createInit } from "./State/Init";
 import { createNotify } from "./State/Notify";
 import { createStorage } from "./State/Storage";
@@ -16,6 +17,9 @@ export function createState(displayName, nodeId) {
         if (!object) {
             object = createObjectProxy(props);
             node.set(State, object);
+        }
+        else if (!changeRef.current) {
+            changeRef.current++;
         }
         if (valueChanged) {
             changeRef.current++;
@@ -66,6 +70,7 @@ export function createState(displayName, nodeId) {
                 setCounter(counter => counter + 1);
             };
             object.__register(handler);
+            setCounter(counter => counter + 1);
             return () => {
                 object.__unregister(handler);
             };
@@ -76,6 +81,7 @@ export function createState(displayName, nodeId) {
     State.Notify = createNotify(State);
     State.Storage = createStorage(State);
     State.Children = createChildren(State);
+    State.Counter = createCounter(State);
     State.displayName = displayName;
     return State;
 }
