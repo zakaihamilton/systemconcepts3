@@ -1,32 +1,17 @@
-import { useEffect } from "react";
+import { useCounter } from "./State/Counter";
+import { createState } from "./State";
+import { useMemo } from "react";
 
 export function createHandler(displayName, nodeId) {
-    function Handler({ children, handler }) {
-        const node = Node.useNode(nodeId);
-        let handlers = node.get(Handler);
-        if (!handlers) {
-            handlers = [];
-            node.set(Handler, handlers);
-        }
-        useEffect(() => {
-            if (!handler) {
-                return;
-            }
-            handlers.push(handler);
-            return () => {
-                const index = handlers.findIndex(el => el === handler);
-                if (index !== -1) {
-                    handlers.splice(index, 1);
-                }
-            };
-        }, [handlers, handler]);
-        return children;
-    }
-    Handler.useHandlers = () => {
-        const node = Node.useNode(nodeId);
-        let handlers = node.get(Handler);
+    const State = createState(displayName, nodeId);
+    State.useHandlers = () => {
+        const state = State.usePassiveState();
+        const counter = useCounter(State);
+        const handlers = useMemo(() => {
+            return Object.values(state || {});
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [counter]);
         return handlers;
     };
-    Handler.displayName = displayName;
-    return Handler;
+    return State;
 }
